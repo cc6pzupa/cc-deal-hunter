@@ -3,7 +3,8 @@
 
   ledger.py config [--set key=value ...]
   ledger.py add                      read one item or a list as JSON from stdin / 从 stdin 读 JSON
-  ledger.py list [--category C] [--status active|expiring|archived|claimed|all] [--claimable] [--brief]
+  ledger.py list [--category C] [--status active|expiring|pending|archived|claimed|all] [--claimable] [--brief]
+  ledger.py hold ID --reason R [--note TEXT] [--url URL]   park it for the user, keep going / 放进「待你处理」，继续下一条
   ledger.py claim ID --result TEXT [--failed]
   ledger.py archive ID               archive manually (offer ended early) / 手动归档
   ledger.py digest [--days 1] [--lang zh|en]   Markdown digest / 日报
@@ -25,23 +26,32 @@ CFG = os.path.join(HOME, "config.json")
 CATEGORIES = ["ai", "crypto", "ucard", "bank", "vps", "software", "other", "risk"]
 LABELS = {
     "zh": {"ai": "AI", "crypto": "Crypto", "ucard": "U卡", "bank": "银行与卡", "vps": "VPS与云", "software": "软件", "other": "其他", "risk": "风险",
-           "free": "真正免费", "trial": "免费试用", "deposit": "需充值/入金", "volume": "需交易量", "invite": "需邀请", "paid": "付费优惠"},
+           "free": "真正免费", "trial": "免费试用", "deposit": "需充值/入金", "volume": "需交易量", "invite": "需邀请", "paid": "付费优惠",
+           "h_login": "要登录", "h_card": "要绑卡", "h_payment": "要付款/充值", "h_kyc": "要实名/证件", "h_code": "要验证码",
+           "h_captcha": "人机验证", "h_wallet": "钱包签名/授权", "h_terms": "条款要你确认", "h_blocked": "网站拦截了自动操作", "h_other": "其他"},
     "en": {"ai": "AI", "crypto": "Crypto", "ucard": "Crypto card", "bank": "Bank & cards", "vps": "VPS & cloud", "software": "Software", "other": "Other", "risk": "Risk",
-           "free": "Truly free", "trial": "Free trial", "deposit": "Needs deposit", "volume": "Needs volume", "invite": "Needs invite", "paid": "Paid discount"},
+           "free": "Truly free", "trial": "Free trial", "deposit": "Needs deposit", "volume": "Needs volume", "invite": "Needs invite", "paid": "Paid discount",
+           "h_login": "Sign-in needed", "h_card": "Card needed", "h_payment": "Payment / top-up", "h_kyc": "KYC / ID", "h_code": "Verification code",
+           "h_captcha": "CAPTCHA", "h_wallet": "Wallet sign / approve", "h_terms": "Terms need your OK", "h_blocked": "Site blocked automation", "h_other": "Other"},
 }
 TEXT = {
     "zh": {"unverified": " ·【待核实】", "value_na": "价值未写明", "deadline": "截止", "not_stated": "未写明", "regions": "地区", "conditions": "条件",
            "official": "官方", "sources": "来源 {n} 个", "verified_at": "核对于", "claimed": " · ✅ 已领", "title": "# 羊毛日报 · {t}",
            "stats": "进行中 {a} · 新发现 {n} · 48 小时内截止 {e} · 待核实 {u} · 已领 {c}",
+           "pending": "## 🙋 待你处理（{n} 条）", "pending_hint": "按原因分组。要登录的可以一次接管浏览器把这些网站都登录好，然后说「继续领」。",
+           "stopped_at": "停在",
            "A": "A 今日新发现", "B": "B 高价值排行", "C": "C AI 专区", "D": "D Crypto 专区", "E": "E 银行与卡", "F": "F VPS 与云",
            "G": "G 即将截止（48 小时内）", "risk": "## ⚠️ 风险提醒", "H": "## H 已结束档案：{n} 条（`ledger.py list --status archived` 查看）"},
     "en": {"unverified": " · [unverified]", "value_na": "value not stated", "deadline": "ends", "not_stated": "not stated", "regions": "regions", "conditions": "Conditions",
            "official": "Official", "sources": "{n} source(s)", "verified_at": "verified", "claimed": " · ✅ claimed", "title": "# Deal digest · {t}",
            "stats": "Active {a} · new {n} · ending within 48h {e} · unverified {u} · claimed {c}",
+           "pending": "## 🙋 Waiting for you ({n})", "pending_hint": "Grouped by reason. For sign-ins, take over the browser once, sign in to all of these sites, then say \"continue claiming\".",
+           "stopped_at": "stopped at",
            "A": "A New today", "B": "B Top value", "C": "C AI", "D": "D Crypto", "E": "E Banks & cards", "F": "F VPS & cloud",
            "G": "G Ending within 48h", "risk": "## ⚠️ Risk alerts", "H": "## H Archive: {n} item(s) (`ledger.py list --status archived`)"},
 }
 COST_TYPES = ["free", "trial", "deposit", "volume", "invite", "paid"]
+HOLD_REASONS = ["login", "card", "payment", "kyc", "code", "captcha", "wallet", "terms", "blocked", "other"]
 DEFAULT_CFG = {"interests": ["ai", "crypto", "ucard", "bank", "vps", "software", "other"],
                "regions": [], "auto_claim": "ask", "accounts": [], "lang": "zh"}
 FIELDS_HELP = """Fields / 字段 (* required 必填):
@@ -123,6 +133,8 @@ def status(d, t=None):
         return "archived"
     if d.get("claimed"):
         return "claimed"
+    if d.get("hold"):
+        return "pending"
     if dl and dl < t + dt.timedelta(hours=48):
         return "expiring"
     return "active"
@@ -194,7 +206,7 @@ def cmd_add(a, db):
 
 def claimable(d, cfg):
     mode = cfg.get("auto_claim", "ask")
-    if mode == "off" or d["category"] == "risk" or status(d) not in ("active", "expiring"):
+    if mode == "off" or d["category"] == "risk" or status(d) not in ("active", "expiring"):  # pending = waiting for the user / 等用户处理
         return False
     regions = {r.lower() for r in cfg.get("regions") or []}
     dr = {r.lower() for r in d.get("regions") or []}
@@ -212,7 +224,7 @@ def sort_key(d):
 
 def cmd_list(a, db, cfg):
     rows = [d for d in db.values()
-            if (a.status == "all" or status(d) == a.status or (a.status == "active" and status(d) == "expiring"))
+            if (a.status == "all" or status(d) == a.status or (a.status == "active" and status(d) in ("expiring", "pending")))
             and (not a.category or d["category"] == a.category)
             and (not a.claimable or claimable(d, cfg))]
     rows.sort(key=sort_key)
@@ -229,7 +241,15 @@ def cmd_claim(a, db):
     d.setdefault("claim_log", []).append({"at": iso(now()), "ok": not a.failed, "result": a.result})
     if not a.failed:
         d["claimed"] = True
+        d.pop("hold", None)
     print(json.dumps({"id": a.id, "claimed": d.get("claimed", False)}, ensure_ascii=False))
+
+
+def cmd_hold(a, db):
+    d = db.get(a.id) or sys.exit(f"No such id / 没有这个 id: {a.id}")
+    d["hold"] = {"reason": a.reason, "note": a.note or "", "url": a.url or d["official_url"], "at": iso(now())}
+    d.setdefault("claim_log", []).append({"at": d["hold"]["at"], "ok": False, "result": f"hold: {a.reason} {a.note or ''}".strip()})
+    print(json.dumps({"id": a.id, "status": "pending", "reason": a.reason}, ensure_ascii=False))
 
 
 def fmt_time(s, T):
@@ -258,7 +278,7 @@ def cmd_digest(a, db, cfg):
     T = TEXT[lang]
     t = now()
     since = t - dt.timedelta(days=a.days)
-    live = [d for d in db.values() if status(d, t) in ("active", "expiring", "claimed")]
+    live = [d for d in db.values() if status(d, t) in ("active", "expiring", "pending", "claimed")]
     deals = [d for d in live if d["category"] != "risk"]
     new = [d for d in deals if parse_time(d["found_at"]) >= since]
     expiring = [d for d in deals if status(d, t) == "expiring"]
@@ -272,6 +292,17 @@ def cmd_digest(a, db, cfg):
     out = [T["title"].format(t=t.astimezone().strftime("%Y-%m-%d %H:%M")),
            T["stats"].format(a=len(deals), n=len(new), e=len(expiring), u=sum(not d["verified"] for d in deals),
                              c=sum(bool(d.get("claimed")) for d in deals))]
+    pending = [d for d in deals if status(d, t) == "pending"]
+    if pending:
+        L = LABELS[lang]
+        out += ["", T["pending"].format(n=len(pending)), "", T["pending_hint"]]
+        for r in HOLD_REASONS:
+            grp = sorted([d for d in pending if d["hold"]["reason"] == r], key=sort_key)
+            if grp:
+                out += ["", f"**{L['h_' + r]}**"] + [
+                    f"- [{L[d['category']]}] {d['title']} — {d['hold']['url']}"
+                    + (f" · {T['deadline']} {fmt_time(d.get('deadline'), T)}" if d.get("deadline") else "")
+                    + (f" · {T['stopped_at']}: {d['hold']['note']}" if d["hold"]["note"] else "") for d in grp]
     for key, rows, resort in sec:  # B is already ordered by value / B 已按价值排好
         if rows:
             rows = sorted(rows, key=sort_key) if resort else rows
@@ -309,13 +340,18 @@ def main():
     sub.add_parser("add", description=FIELDS_HELP, formatter_class=argparse.RawDescriptionHelpFormatter)
     p = sub.add_parser("list")
     p.add_argument("--category", choices=CATEGORIES)
-    p.add_argument("--status", default="active", choices=["active", "expiring", "archived", "claimed", "all"])
+    p.add_argument("--status", default="active", choices=["active", "expiring", "pending", "archived", "claimed", "all"])
     p.add_argument("--claimable", action="store_true")
     p.add_argument("--brief", action="store_true")
     p = sub.add_parser("claim")
     p.add_argument("id")
     p.add_argument("--result", required=True)
     p.add_argument("--failed", action="store_true")
+    p = sub.add_parser("hold", help="park an item for the user / 放进待你处理")
+    p.add_argument("id")
+    p.add_argument("--reason", required=True, choices=HOLD_REASONS)
+    p.add_argument("--note", help="where it stopped / 停在哪一步")
+    p.add_argument("--url", help="page to resume from / 从哪个页面继续")
     p = sub.add_parser("archive")
     p.add_argument("id")
     p = sub.add_parser("digest")
@@ -334,6 +370,8 @@ def main():
         cmd_list(a, db, cfg)
     elif a.cmd == "claim":
         cmd_claim(a, db); changed = True
+    elif a.cmd == "hold":
+        cmd_hold(a, db); changed = True
     elif a.cmd == "archive":
         d = db.get(a.id) or sys.exit(f"No such id / 没有这个 id: {a.id}")
         d.update(archived=True, archived_at=iso(now()), archived_why="manual")

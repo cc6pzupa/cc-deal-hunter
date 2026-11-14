@@ -42,14 +42,18 @@ Don't claim. Give the user the steps and official link for each item. / 不自�
 2. Open the official link. **Check the domain first** — it must be official; if it redirects somewhere unfamiliar, stop and mark it as a risk. / **先核对域名**，跳到陌生域名就停下并标为风险。
 3. When sign-in is needed, prefer "Continue with Google / GitHub" using the signed-in account; if not signed in, ask the user to take over per Step 1. / 优先「用 Google / GitHub 继续」；没登录就请用户接管登录。
 4. Follow the page step by step — sign up, click claim, enter codes — and confirm a success message after each step. / 一步步操作，每步确认有成功提示。
-5. **Stop immediately** and tell the user the page, the step and what's missing (on a cloud browser, start a take-over) if you hit: / 遇到以下情况**立即停下**交给用户：
+5. If you hit any of these, **don't do it and don't wait** — park the item and **move on to the next one** (the user handles them later in one go): / 遇到以下情况，**不替用户做、也不原地等**：放进「待你处理」，**接着领下一条**（用户之后一次性处理）：
    - payment, card binding, top-up, deposit, or an auto-renewal checkbox / 付款、绑卡、充值、入金、自动续费
    - KYC, ID upload, ID or tax numbers / 实名认证、上传证件、身份证号或税号
    - a password, SMS or email code, or a CAPTCHA / 密码、短信或邮箱验证码、人机验证
    - wallet connect, signatures, token approvals / 连接钱包、签名、授权代币
    - terms that need the user's judgement (data used for training, forced arbitration, long holding periods) / 需要用户自己判断的条款
-   - "already claimed", "not eligible" or "region not supported" / 已领过、不符合资格、地区不支持
-6. Record the result: what was received, where to see it, when it expires; or where it got stuck. With the script: `ledger.py claim <id> --result "..."` (add `--failed` if it didn't work). / 记录结果，没领成写卡在哪一步。
+   - the site blocks automation or keeps challenging the cloud browser / 网站拦截自动操作，或者反复要求验证
+
+   Park it / 放进待处理：`ledger.py hold <id> --reason login|card|payment|kyc|code|captcha|wallet|terms|blocked|other --note "where it stopped / 停在哪一步" --url <page to resume / 从哪个页面继续>`. Without the script, add it to a "Waiting for you / 待你处理" list in the conversation with the same fields.
+   "Already claimed", "not eligible" or "region not supported" are not holds: record them with `ledger.py claim <id> --failed --result "..."`. / 「已领过、不符合资格、地区不支持」不算待处理，用 `--failed` 记录。
+6. Record successes: what was received, where to see it, when it expires — `ledger.py claim <id> --result "..."`. / 领到了就记录：领到什么、在哪查看、何时过期。
+7. When the batch is done, give the user the "🙋 Waiting for you / 待你处理" list grouped by reason (`ledger.py digest` puts it first). **Batch the sign-ins**: on a cloud computer, start one take-over and let the user sign in to every site on the login list; locally, ask them to sign in in their browser. When they say "continue / 继续领", run `ledger.py list --status pending` and retry each; items that still need them get held again. / 整批跑完，把「待你处理」按原因分组交给用户。**登录合并成一次**：云电脑上发起一次接管，让用户把清单上的网站都登录好；之后说「继续领」，就逐条重试，还需要用户处理的再放回清单。
 
 ## Rules / 规矩
 

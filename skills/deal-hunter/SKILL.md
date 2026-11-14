@@ -68,8 +68,11 @@ Read `references/claiming.md` first. In short / 先读 `references/claiming.md`�
   先判断手上是哪种浏览器：平台自带的云电脑或云端浏览器（Grok Bot、Muse、ChatGPT Work 等，需要登录时请用户**接管**后自己登录，登录会保留），还是用户本机的浏览器。都没有就只列步骤，不自动领。
 - Only the user's own signed-in accounts, one account per person, **one claim per offer**. / 只用用户自己的账号，**一个活动领一份**。
 - With `auto_claim=free_only`, auto-claim only `cost_type=free`, `verified=true`, eligible region, no card/KYC/wallet. / `free_only` 只自动领真正免费、已核对、地区符合、不绑卡不实名的。
-- **Always stop and hand over** for: payment, card binding, deposits, KYC/ID upload, personal identity data, SMS/email codes, CAPTCHAs, auto-renewal terms, wallet connect/sign. / 付款、绑卡、充值、实名、证件、验证码、人机验证、自动续费、连接钱包签名——**一律停下交给用户**。
-- Then `ledger.py claim <id> --result "what was received / where it stopped"`. / 领完记录结果。
+- **Never block the run.** When an item needs something only the user can do — sign-in, card binding, payment, deposit, KYC/ID, SMS/email code, CAPTCHA, wallet connect/sign, terms to accept, or the site blocks automation — **don't do it and don't wait**: park it with `ledger.py hold <id> --reason login|card|payment|kyc|code|captcha|wallet|terms|blocked|other --note "where it stopped"` and **move on to the next item**.
+  **不要卡住整个流程。** 遇到只有用户能做的事（登录、绑卡、付款、充值、实名、验证码、人机验证、钱包签名、条款确认、网站拦截自动操作），**不替用户做、也不原地等**：用 `ledger.py hold` 放进「待你处理」，**接着领下一条**。
+- After the whole batch, show the "🙋 Waiting for you / 待你处理" list grouped by reason (the digest puts it at the top). Sign-ins are batched: the user takes over once, signs in to all those sites, then says "continue claiming / 继续领" — run `ledger.py list --status pending` and retry each.
+  整批跑完再把「待你处理」按原因分组给用户（日报会放在最上面）。要登录的合并成一次：用户接管一次、把这些网站都登录好，说「继续领」，你再运行 `ledger.py list --status pending` 逐条重试。
+- Successful claims: `ledger.py claim <id> --result "what was received"` (this also clears a hold). / 领到了就记录，同时会从待处理里移除。
 
 ## 5. Report / 汇报
 

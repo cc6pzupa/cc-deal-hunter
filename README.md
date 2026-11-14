@@ -44,7 +44,7 @@ git clone --depth 1 https://github.com/cc6pzupa/cc-deal-hunter /tmp/cc-deal-hunt
 - **内置云电脑的 AI**（Grok Bot、Muse、ChatGPT Work）：需要登录时，AI 会请你接管浏览器，你自己输密码、做两步验证；登录之后会一直保留在云电脑里。
 - **本机浏览器**（Claude in Chrome 等扩展、Playwright MCP 加持久化配置目录、桌面控制）：用的就是你电脑上已经登录的账号，登录态不离开你的电脑。
 
-付款、绑卡、充值、实名认证、验证码、人机验证、连接钱包、签名授权——一律停下来交给你。一人一份，不注册小号，不绕过网站的机器人检测。详见 [`claiming.md`](skills/deal-hunter/references/claiming.md)。
+要登录、付款、绑卡、充值、实名认证、验证码、人机验证、连接钱包、签名授权的，AI 不替你做，也**不会卡住**：放进「🙋 待你处理」清单，接着领下一条。整批跑完按原因分组给你，要登录的你接管一次全部登好，说「继续领」就行。一人一份，不注册小号，不绕过网站的机器人检测。详见 [`claiming.md`](skills/deal-hunter/references/claiming.md)。
 
 建议准备一个专门用来薅羊毛的账号，不要在云电脑里登录主力邮箱、银行或交易所主账号。
 
@@ -55,7 +55,7 @@ skills/deal-hunter/
   SKILL.md                  主流程（中英双语）：发现 → 核对 → 记账 → 领取 → 汇报 → 定时
   references/sources.md     各类别去哪找、怎么搜
   references/claiming.md    各平台浏览器怎么登录、领取流程、停止条件
-  scripts/ledger.py         本地账本：去重、过期归档、领取记录、A–H 日报（--lang zh|en，只用 Python 标准库）
+  scripts/ledger.py         本地账本：去重、过期归档、领取记录、待你处理清单、A–H 日报（--lang zh|en，只用 Python 标准库）
   scripts/feeds.py          读任意 RSS / Atom 源
 PROMPT.md                   一段话版（中文版 + English），给不能装 skill 的 AI
 .claude-plugin/             Claude Code 插件市场配置
@@ -121,13 +121,13 @@ Signing in is **always done by you**; the AI only acts afterwards.
 - **Agents with a built-in cloud computer** (Grok Bot, Muse, ChatGPT Work): when a login is needed the AI hands you the browser ("take over"); you type the password and 2FA; the session stays on that cloud computer.
 - **Your local browser** (Claude in Chrome and similar extensions, Playwright MCP with a persistent profile, computer use): reuses the accounts already signed in on your machine; the session never leaves it.
 
-The agent stops and hands over for payments, card binding, deposits, KYC, verification codes, CAPTCHAs, wallet connections and signatures. One claim per person, no alt accounts, no bot-detection bypassing. See [`claiming.md`](skills/deal-hunter/references/claiming.md).
+Anything that needs a sign-in, payment, card, deposit, KYC, verification code, CAPTCHA, wallet connection or signature is never done for you and **never blocks the run**: it goes on a "🙋 Waiting for you" list and the agent moves on. At the end you get the list grouped by reason; take over once to sign in to all the sites, say "continue claiming", and it retries. One claim per person, no alt accounts, no bot-detection bypassing. See [`claiming.md`](skills/deal-hunter/references/claiming.md).
 
 Use a dedicated account for deals; don't sign in to your main email, bank or exchange accounts on a cloud computer.
 
 ### What's inside
 
-`skills/deal-hunter/` holds `SKILL.md` (bilingual workflow), `references/sources.md` (where to look), `references/claiming.md` (sign-in per platform, claim flow, stop rules), `scripts/ledger.py` (local ledger, de-dupe, auto-archive, claim log, A–H digest with `--lang zh|en`; Python stdlib only) and `scripts/feeds.py` (RSS/Atom reader). `PROMPT.md` has the paste-in prompt in Chinese and English. Your ledger and settings stay in `~/.deal-hunter/` on your machine.
+`skills/deal-hunter/` holds `SKILL.md` (bilingual workflow), `references/sources.md` (where to look), `references/claiming.md` (sign-in per platform, claim flow, stop rules), `scripts/ledger.py` (local ledger, de-dupe, auto-archive, claim log, waiting-for-you list, A–H digest with `--lang zh|en`; Python stdlib only) and `scripts/feeds.py` (RSS/Atom reader). `PROMPT.md` has the paste-in prompt in Chinese and English. Your ledger and settings stay in `~/.deal-hunter/` on your machine.
 
 ### Data sources
 

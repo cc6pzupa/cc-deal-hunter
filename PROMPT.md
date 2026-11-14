@@ -35,12 +35,13 @@ AIs that can install skills (Claude, ChatGPT/Codex, Gemini CLI, Cursor…) shoul
 **四、领取（只在我允许的范围内）**
 - 只用浏览器里**我自己已经登录**的账号，优先「用 Google 继续」。需要登录而还没登录时，把浏览器交给我（Take over / 接管），我自己输密码；你不要输入、保存或索要我的密码。
 - 先核对域名是不是官方的，跳到陌生域名就停下并标为风险。
-- 遇到下面任何一种情况，**立刻停下交给我**：付款、绑卡、充值、自动续费；实名认证、上传证件；密码、短信或邮箱验证码、人机验证；连接钱包、签名、授权；需要我判断的条款；"已领过 / 不符合资格 / 地区不支持"。
+- 遇到下面任何一种情况，**不要替我做，也不要停下来等我**：把这条放进「🙋 待你处理」清单（写清原因、停在哪一步、从哪个页面继续），**接着领下一条**：要登录、付款、绑卡、充值、自动续费；实名认证、上传证件；短信或邮箱验证码、人机验证；连接钱包、签名、授权；需要我判断的条款；网站拦截自动操作。
+- 整批跑完再把「待你处理」按原因分组给我。要登录的合并成一次：我接管一次浏览器把这些网站都登录好，说「继续领」，你再逐条重试。"已领过 / 不符合资格 / 地区不支持"的直接记为没领成，不放进清单。
 - 一人一份：不注册小号，不批量领，不绕过网站的机器人检测或人机验证。
 - 领完告诉我：领到了什么、在哪里查看、什么时候过期；试用类的要说清楚什么时候开始扣费、怎么取消。
 
 **五、汇报**
-按这个顺序给我：A 今日新发现 · B 高价值排行 · C AI 专区 · D Crypto 专区 · E 银行与卡 · F VPS 与云 · G 48 小时内截止 · H 已结束档案（只给数量）。骗局、跑路、钓鱼、条款陷阱单独放在「⚠️ 风险提醒」里。条目多时先给 A 和 G 两部分。
+按这个顺序给我：🙋 待你处理（按原因分组）· A 今日新发现 · B 高价值排行 · C AI 专区 · D Crypto 专区 · E 银行与卡 · F VPS 与云 · G 48 小时内截止 · H 已结束档案（只给数量）。骗局、跑路、钓鱼、条款陷阱单独放在「⚠️ 风险提醒」里。条目多时先给 A 和 G 两部分。
 
 **六、定时**
 如果你支持定时任务，就每 2 小时按上面的流程跑一遍，只在有新的高价值活动或者 48 小时内要截止的活动时提醒我。
@@ -73,12 +74,13 @@ Keep a table in this conversation (or Space, project, memory) with: name, catego
 **4. Claim (only within what I allowed)**
 - Use only accounts **I'm already signed in to** in the browser; prefer "Continue with Google". If a login is needed and I'm not signed in, hand the browser to me (Take over) and I'll type the password; never type, store or ask for my password.
 - Check the domain is official first; if it redirects somewhere unfamiliar, stop and mark it as a risk.
-- **Stop immediately and hand over to me** for: payment, card binding, top-ups, auto-renewal; KYC or ID upload; passwords, SMS or email codes, CAPTCHAs; wallet connect, signatures, approvals; terms that need my judgement; "already claimed / not eligible / region not supported".
+- For any of these, **don't do it for me and don't stop to wait**: put the item on a "🙋 Waiting for you" list (reason, where it stopped, page to resume from) and **move on to the next one**: sign-in, payment, card binding, top-ups, auto-renewal; KYC or ID upload; SMS or email codes, CAPTCHAs; wallet connect, signatures, approvals; terms that need my judgement; the site blocking automation.
+- When the batch is done, give me the waiting list grouped by reason. Batch the sign-ins: I take over the browser once and sign in to all of those sites, then say "continue claiming" and you retry each. "Already claimed / not eligible / region not supported" are just recorded as not claimed, not put on the list.
 - One per person: no alt accounts, no bulk claiming, no getting around bot detection or CAPTCHAs.
 - Afterwards tell me what I got, where to see it and when it expires; for trials, when billing starts and how to cancel.
 
 **5. Report**
-In this order: A New today · B Top value · C AI · D Crypto · E Banks & cards · F VPS & cloud · G Ending within 48h · H Archive (count only). Put scams, rug pulls, phishing and trap terms under "⚠️ Risk alerts". If there are many items, show A and G first.
+In this order: 🙋 Waiting for you (grouped by reason) · A New today · B Top value · C AI · D Crypto · E Banks & cards · F VPS & cloud · G Ending within 48h · H Archive (count only). Put scams, rug pulls, phishing and trap terms under "⚠️ Risk alerts". If there are many items, show A and G first.
 
 **6. Schedule**
 If you support scheduled tasks, run this every 2 hours and only alert me about new high-value offers or ones ending within 48 hours.

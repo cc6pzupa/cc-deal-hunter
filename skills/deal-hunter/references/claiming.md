@@ -41,7 +41,7 @@ Don't claim. Give the user the steps and official link for each item. / 不自�
    - payment, card binding, top-up, deposit, or an auto-renewal checkbox / 付款、绑卡、充值、入金、自动续费
    - KYC, ID upload, ID or tax numbers / 实名认证、上传证件、身份证号或税号
    - a password, an SMS code the user hasn't sent yet, an email code that hasn't arrived after a few minutes / 密码、用户还没给的短信验证码、等几分钟还没收到的邮箱验证码
-   - a human check (CAPTCHA) that hasn't cleared after **3 attempts** — waiting for it to pass on its own or reloading the page; puzzle/image challenges aren't solved by you and go straight to the list / 试了 **3 次**还没过的人机验证（等它自动通过或刷新页面）；要做图片/拼图题的不自己解，直接放进清单
+   - a human check (CAPTCHA) that **you** tried to solve **3 times** without clearing it — tick/wait, or solve the image, text, slider or puzzle challenge from a screenshot, reloading for a new one between tries / AI 自己解了 **3 次**还没过的人机验证（勾选/等自动通过，或看截图做图片、文字、滑块、拼图题，没过就换一题再试）
    - wallet connect, signatures, token approvals / 连接钱包、签名、授权代币
    - terms that need the user's judgement (data used for training, forced arbitration, long holding periods) / 需要用户自己判断的条款
    - the site blocks automation or keeps challenging the cloud browser / 网站拦截自动操作，或者反复要求验证

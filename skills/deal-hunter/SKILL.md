@@ -15,6 +15,7 @@ Files in this skill / 本 skill 的文件：
 - `references/sources.md` — where to look for each category / 每类去哪找、怎么搜
 - `references/claiming.md` — browser sign-in per platform, claim flow, stop rules / 各平台浏览器怎么登录、领取流程、停止条件
 - `scripts/ledger.py` — local ledger: de-dupe, auto-archive, claim log, digest (Python stdlib only) / 本地账本
+- `scripts/dashboard.html` — board template used by `ledger.py dashboard` / 看板模板
 - `scripts/feeds.py` — read any RSS/Atom feed as JSON / 读 RSS、Atom 源
 
 ## 0. First run / 第一次使用
@@ -30,6 +31,22 @@ Defaults, no need to ask / 默认值，不用问：all categories 全部类别 �
 
 Data lives in `~/.deal-hunter/` (override with `DEAL_HUNTER_HOME`), **on the user's machine only**. If you cannot run Python, keep a table with the same fields in the conversation, project or platform memory, and apply the same de-dupe and archive rules.
 账本和配置在 `~/.deal-hunter/`，**只存在用户本机**。不能运行 Python 时，就在对话、项目或平台记忆里维护同样字段的一张表，按同样规则去重和归档。
+
+## 0.5 Build the board / 建看板
+
+Right after the Google check — before searching — set up the user's **deal board**. Everything you find and claim lands on it, and you refresh it after every run.
+查完 Google 登录、开始搜之前，先给用户**建一个羊毛看板**。之后找到的、领到的都放上去，每跑一轮刷新一次。
+
+What it shows / 看板内容：
+- **Stat tiles / 统计**：Active 进行中 · New today 今日新增 · Ending within 48h 48 小时内截止 · Waiting for you 待你处理 · Unverified 待核实 · Claimed 已领 · Confirmed value $ 已确认价值
+- **Tabs / 分栏**：🙋 Waiting for you 待你处理 (default when not empty / 有内容时默认打开) · A New today 今日新发现 · B Top value 高价值 · C AI · D Crypto · E Banks & cards 银行与卡 · F VPS & cloud VPS 与云 · G Ending soon 即将截止 · H Archive 已结束 · ⚠️ Risk 风险 · All 全部
+- **Search / 搜索** over title, offer, sources / 按名称、内容、来源搜
+- **Card per deal / 每条一张卡片**：category, cost type, unverified / claimed / waiting-reason tags; value; title linking to the official page; offer; deadline, regions, sources, last verified; conditions; risks; for waiting items, where it stopped and the page to resume / 分类、成本类型、待核实/已领/待处理原因标签；价值；标题链到官方页；内容；截止、地区、来源数、核对时间；条件；风险；待处理的写停在哪一步和继续页面
+
+How to build it on each platform / 各平台怎么建：
+- **Can run Python / 能运行 Python**：`python3 scripts/ledger.py dashboard --lang zh|en` writes a self-contained HTML board to `~/.deal-hunter/dashboard.html`; open it in the browser and give the user the path. Re-run after every batch. / 生成单文件 HTML 看板，用浏览器打开并把路径告诉用户；每跑完一轮重新生成。
+- **Muse**：create a dedicated Space as the board (Spaces build trackers and boards), with the tiles, tabs and card fields above; update it in the background after each run. / 建一个专门的 Space 当看板，按上面的统计、分栏、卡片字段做；每轮后台更新。
+- **Grok Bot / ChatGPT Work / other cloud computers / 其他云电脑**：build the board as a page on the cloud computer (copy the layout of `scripts/dashboard.html`, fill its `DATA` with the items) or in the platform's canvas/document feature; keep it open and refresh it after each run. / 在云电脑上做成网页（照 `scripts/dashboard.html` 的布局，把数据填进 `DATA`），或用平台的画布/文档功能；保持打开，每轮刷新。
 
 ## 1. Discover / 发现
 
@@ -76,8 +93,8 @@ Read `references/claiming.md` first. In short / 先读 `references/claiming.md`�
 
 ## 5. Report / 汇报
 
-`python3 scripts/ledger.py digest --lang zh|en` produces the digest by module:
-生成按模块分组的日报：
+After each run, refresh the board (`ledger.py dashboard`), then reply with a short digest — `python3 scripts/ledger.py digest --lang zh|en`:
+每轮跑完先刷新看板，再回一份简短日报：
 
 A New today 今日新发现 · B Top value 高价值排行 · C AI · D Crypto · E Banks & cards 银行与卡 · F VPS & cloud VPS 与云 · G Ending within 48h 即将截止 · H Archive count 已结束档案
 

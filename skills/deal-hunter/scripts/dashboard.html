@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deal Hunter</title>
+<style>
+:root { --bg:#f6f7f9; --card:#fff; --line:#e3e6ea; --text:#15181c; --muted:#68707a; --brand:#0e9f6e; --on-brand:#fff;
+        --warn:#b45309; --warn-soft:#fef3c7; --risk:#b91c1c; --risk-soft:#fee2e2; --ok:#047857; --ok-soft:#d1fae5; --chip:#eef1f4; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#0d1012; --card:#15191c; --line:#252b30; --text:#e6e9ec; --muted:#8b949e; --brand:#2fd08f; --on-brand:#06140e;
+          --warn:#fbbf24; --warn-soft:#3a2a07; --risk:#f87171; --risk-soft:#3b1212; --ok:#34d399; --ok-soft:#06281c; --chip:#1e2428; }
+}
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+.wrap { max-width:1100px; margin:0 auto; padding:16px; }
+header { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin-bottom:14px; }
+h1 { font-size:20px; margin:0; }
+.sub { color:var(--muted); font-size:13px; }
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:14px; }
+.stat { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:10px 12px; }
+.stat b { display:block; font-size:22px; font-variant-numeric:tabular-nums; }
+.stat span { color:var(--muted); font-size:12px; }
+.stat.hot b { color:var(--warn); }
+.tabs { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+.tab { border:1px solid var(--line); background:var(--card); color:var(--text); border-radius:999px; padding:4px 12px; font-size:13px; cursor:pointer; }
+.tab[aria-pressed="true"] { background:var(--brand); border-color:var(--brand); color:var(--on-brand); font-weight:600; }
+.tab i { font-style:normal; opacity:.7; margin-left:4px; }
+.bar { display:flex; gap:8px; margin-bottom:12px; }
+.bar input { flex:1; min-width:0; border:1px solid var(--line); background:var(--card); color:var(--text); border-radius:9px; padding:8px 10px; font-size:14px; }
+.hint { color:var(--muted); font-size:13px; margin:0 0 10px; }
+.list { display:grid; gap:10px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px; display:grid; gap:6px; }
+.card.pending { border-color:var(--warn); }
+.card.risk { border-color:var(--risk); }
+.tags { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+.tag { background:var(--chip); border-radius:6px; padding:0 7px; font-size:12px; line-height:1.8; }
+.tag.warn { background:var(--warn-soft); color:var(--warn); }
+.tag.risk { background:var(--risk-soft); color:var(--risk); }
+.tag.ok { background:var(--ok-soft); color:var(--ok); }
+.val { margin-left:auto; font-weight:700; color:var(--brand); }
+.title { font-size:15px; font-weight:650; margin:0; overflow-wrap:anywhere; }
+.title a { color:inherit; text-decoration:none; }
+.title a:hover { text-decoration:underline; }
+.offer { margin:0; overflow-wrap:anywhere; }
+.meta { color:var(--muted); font-size:12.5px; display:flex; flex-wrap:wrap; gap:4px 12px; }
+.note { font-size:13px; overflow-wrap:anywhere; }
+.note.warn { color:var(--warn); }
+.note.risk { color:var(--risk); }
+.note a { color:inherit; }
+.empty { color:var(--muted); text-align:center; padding:30px 0; }
+@media (max-width:520px) { .stat b { font-size:19px; } .wrap { padding:12px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1 id="h1"></h1><span class="sub" id="updated"></span></header>
+  <section class="stats" id="stats"></section>
+  <nav class="tabs" id="tabs"></nav>
+  <div class="bar"><input id="q" type="search" autocomplete="off"></div>
+  <p class="hint" id="hint"></p>
+  <main class="list" id="list"></main>
+</div>
+<script>
+const DATA = /*DATA*/{};
+const T = {
+  zh: { h1:"羊毛猎手 · 看板", updated:"更新于 {t}", search:"搜索名称、内容、来源…", empty:"这里暂时没有内容",
+        s_active:"进行中", s_new:"今日新增", s_exp:"48 小时内截止", s_pending:"待你处理", s_unv:"待核实", s_claimed:"已领", s_value:"已确认价值 $",
+        t_pending:"🙋 待你处理", t_A:"A · 今日新发现", t_B:"B · 高价值", t_C:"C · AI", t_D:"D · Crypto", t_E:"E · 银行与卡", t_F:"F · VPS 与云",
+        t_G:"G · 即将截止", t_H:"H · 已结束", t_risk:"⚠️ 风险", t_all:"全部",
+        pendingHint:"按原因分组。要登录的可以一次接管浏览器全部登好，然后跟 AI 说「继续领」。",
+        unverified:"待核实", claimed:"已领", ended:"已结束", deadline:"截止", noDeadline:"未写明截止", regions:"地区", sources:"来源 {n} 个",
+        verified:"核对于 {t}", stoppedAt:"停在", resume:"继续页面", conditions:"条件", valueNa:"价值未写明" },
+  en: { h1:"Deal Hunter · Board", updated:"Updated {t}", search:"Search name, offer, source…", empty:"Nothing here yet",
+        s_active:"Active", s_new:"New today", s_exp:"Ending within 48h", s_pending:"Waiting for you", s_unv:"Unverified", s_claimed:"Claimed", s_value:"Confirmed value $",
+        t_pending:"🙋 Waiting for you", t_A:"A · New today", t_B:"B · Top value", t_C:"C · AI", t_D:"D · Crypto", t_E:"E · Banks & cards", t_F:"F · VPS & cloud",
+        t_G:"G · Ending soon", t_H:"H · Archive", t_risk:"⚠️ Risk", t_all:"All",
+        pendingHint:"Grouped by reason. Take over the browser once to sign in to all of these, then tell the AI \"continue claiming\".",
+        unverified:"unverified", claimed:"claimed", ended:"ended", deadline:"ends", noDeadline:"no deadline stated", regions:"regions", sources:"{n} source(s)",
+        verified:"verified {t}", stoppedAt:"stopped at", resume:"resume page", conditions:"Conditions", valueNa:"value not stated" },
+};
+const lang = DATA.lang === "en" ? "en" : "zh";
+const L = DATA.labels || {};
+const t = (k, v) => { let s = (T[lang][k] ?? k); for (const x in (v || {})) s = s.split("{" + x + "}").join(v[x]); return s; };
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+const safeUrl = (u) => /^https?:\/\//i.test(u || "") ? u : "#";
+const fmt = (iso) => { if (!iso) return ""; const d = new Date(iso); return isNaN(d) ? "" : d.toLocaleString(lang === "en" ? "en-US" : "zh-CN", { month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" }); };
+
+const items = DATA.items || [];
+const now = Date.parse(DATA.generated) || Date.now();
+const live = items.filter((d) => d.status !== "archived");
+const deals = live.filter((d) => d.category !== "risk");
+const isNew = (d) => Date.parse(d.found_at) >= now - 86400e3;
+const byKey = (d) => [d.status === "expiring" ? 0 : 1, -(d.value_usd || 0), d.deadline ? Date.parse(d.deadline) : 9e15];
+const sortDefault = (a, b) => { const x = byKey(a), y = byKey(b); for (let i = 0; i < x.length; i++) if (x[i] !== y[i]) return x[i] - y[i]; return 0; };
+
+const TABS = [
+  ["pending", (d) => d.status === "pending"],
+  ["A", (d) => d.category !== "risk" && d.status !== "archived" && isNew(d)],
+  ["B", (d) => d.category !== "risk" && d.status !== "archived" && d.value_usd],
+  ["C", (d) => d.category === "ai" && d.status !== "archived"],
+  ["D", (d) => d.category === "crypto" && d.status !== "archived"],
+  ["E", (d) => (d.category === "bank" || d.category === "ucard") && d.status !== "archived"],
+  ["F", (d) => d.category === "vps" && d.status !== "archived"],
+  ["G", (d) => d.status === "expiring"],
+  ["H", (d) => d.status === "archived"],
+  ["risk", (d) => d.category === "risk" && d.status !== "archived"],
+  ["all", (d) => d.status !== "archived"],
+];
+let tab = live.some((d) => d.status === "pending") ? "pending" : "A";
+
+function renderStats() {
+  const value = deals.filter((d) => d.verified && d.value_usd).reduce((s, d) => s + d.value_usd, 0);
+  const tiles = [
+    ["s_active", deals.length], ["s_new", deals.filter(isNew).length], ["s_exp", deals.filter((d) => d.status === "expiring").length, true],
+    ["s_pending", deals.filter((d) => d.status === "pending").length, true], ["s_unv", deals.filter((d) => !d.verified).length],
+    ["s_claimed", deals.filter((d) => d.claimed).length], ["s_value", Math.round(value).toLocaleString()],
+  ];
+  $("#stats").innerHTML = tiles.map(([k, n, hot]) => `<div class="stat${hot && n ? " hot" : ""}"><b>${esc(n)}</b><span>${esc(t(k))}</span></div>`).join("");
+}
+
+function renderTabs() {
+  $("#tabs").innerHTML = TABS.map(([k, f]) => `<button class="tab" type="button" data-k="${k}" aria-pressed="${k === tab}">${esc(t("t_" + k))}<i>${items.filter(f).length}</i></button>`).join("");
+}
+
+function card(d) {
+  const tags = [`<span class="tag">${esc(L[d.category] || d.category)}</span>`];
+  if (d.category !== "risk") tags.push(`<span class="tag">${esc(L[d.cost_type] || d.cost_type)}</span>`);
+  if (!d.verified) tags.push(`<span class="tag warn">${esc(t("unverified"))}</span>`);
+  if (d.status === "pending") tags.push(`<span class="tag warn">${esc(L["h_" + d.hold.reason] || d.hold.reason)}</span>`);
+  if (d.claimed) tags.push(`<span class="tag ok">${esc(t("claimed"))}</span>`);
+  if (d.status === "archived") tags.push(`<span class="tag">${esc(t("ended"))}</span>`);
+  const val = d.value_usd ? `$${d.value_usd.toLocaleString()}` : (d.value_note || "");
+  const meta = [];
+  if (d.category !== "risk") meta.push(d.deadline ? `${t("deadline")} ${fmt(d.deadline)}` : t("noDeadline"));
+  if (d.regions && d.regions.length) meta.push(`${t("regions")} ${d.regions.join("/")}`);
+  meta.push(t("sources", { n: (d.sources || []).length }));
+  if (d.last_verified) meta.push(t("verified", { t: fmt(d.last_verified) }));
+  const notes = [];
+  if (d.conditions) notes.push(`<div class="note">${esc(t("conditions"))}: ${esc(d.conditions)}</div>`);
+  if (d.risks && d.risks.length) notes.push(`<div class="note risk">⚠️ ${esc(d.risks.join("; "))}</div>`);
+  if (d.status === "pending") notes.push(`<div class="note warn">${d.hold.note ? esc(t("stoppedAt")) + ": " + esc(d.hold.note) + " · " : ""}<a href="${esc(safeUrl(d.hold.url))}" target="_blank" rel="noopener">${esc(t("resume"))}</a></div>`);
+  return `<article class="card${d.status === "pending" ? " pending" : ""}${d.category === "risk" ? " risk" : ""}">
+    <div class="tags">${tags.join("")}<span class="val">${esc(val)}</span></div>
+    <h2 class="title"><a href="${esc(safeUrl(d.official_url))}" target="_blank" rel="noopener">${esc(d.title)}</a></h2>
+    ${d.offer ? `<p class="offer">${esc(d.offer)}</p>` : ""}
+    <div class="meta">${meta.map((m) => `<span>${esc(m)}</span>`).join("")}</div>
+    ${notes.join("")}
+  </article>`;
+}
+
+function renderList() {
+  const f = TABS.find(([k]) => k === tab)[1];
+  const q = $("#q").value.trim().toLowerCase();
+  let rows = items.filter(f).filter((d) => !q || [d.title, d.offer, d.vendor, d.conditions, ...(d.sources || [])].join(" ").toLowerCase().includes(q));
+  rows = tab === "B" ? rows.sort((a, b) => (b.value_usd || 0) - (a.value_usd || 0))
+       : tab === "pending" ? rows.sort((a, b) => a.hold.reason.localeCompare(b.hold.reason) || sortDefault(a, b))
+       : rows.sort(sortDefault);
+  $("#hint").textContent = tab === "pending" && rows.length ? t("pendingHint") : "";
+  $("#list").innerHTML = rows.length ? rows.map(card).join("") : `<p class="empty">${esc(t("empty"))}</p>`;
+}
+
+document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
+document.title = t("h1");
+$("#h1").textContent = t("h1");
+$("#updated").textContent = t("updated", { t: fmt(DATA.generated) });
+$("#q").placeholder = t("search");
+$("#tabs").addEventListener("click", (e) => { const b = e.target.closest(".tab"); if (b) { tab = b.dataset.k; renderTabs(); renderList(); } });
+$("#q").addEventListener("input", renderList);
+renderStats(); renderTabs(); renderList();
+</script>
+</body>
+</html>

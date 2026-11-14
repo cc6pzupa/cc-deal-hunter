@@ -18,7 +18,7 @@
 
 几个建议：
 - 放进一个专门的 **Space / 项目**，记录和设置都留在里面；平台有定时任务的话，让它每 2 小时自动跑一次。
-- 不用先填设置：开局它先查 Google，没登录就直接弹接管让你登录，登好就开工；想改范围随时说一句，比如「只要 AI 和 VPS」。
+- 不用先填设置：开局它先查 Google，没登录就直接弹接管让你登录，然后**给你建一个羊毛看板**（统计、A–H 分栏、待你处理、搜索），之后每跑一轮刷新；想改范围随时说一句，比如「只要 AI 和 VPS」。
 - 自动领取需要登录时，它会请你**接管浏览器**，你自己输密码；登录之后一直保留在云电脑里。
 - 建议用一个专门薅羊毛的账号，不要在云电脑里登录主力邮箱、银行或交易所账号。
 
@@ -62,6 +62,7 @@ skills/deal-hunter/
   SKILL.md                  主流程（中英双语）：发现 → 核对 → 记账 → 领取 → 汇报 → 定时
   references/sources.md     各类别去哪找、怎么搜
   references/claiming.md    各平台浏览器怎么登录、领取流程、待你处理
+  scripts/dashboard.html    看板模板（ledger.py dashboard 生成单文件 HTML 看板）
   scripts/ledger.py         本地账本：去重、过期归档、领取记录、待你处理清单、A–H 日报（--lang zh|en，只用 Python 标准库）
   scripts/feeds.py          读任意 RSS / Atom 源
 .claude-plugin/             Claude Code 插件市场配置
@@ -105,7 +106,7 @@ Install this skill: https://github.com/cc6pzupa/cc-deal-hunter
 
 Tips:
 - Put it in a dedicated **Space / project** so records and settings stay there; if the platform has scheduled tasks, have it run every 2 hours.
-- No setup questionnaire: it checks Google first, pops up a take-over for you to sign in if needed, then gets going; say "only AI and VPS" any time to narrow it.
+- No setup questionnaire: it checks Google first, pops up a take-over for you to sign in if needed, then **builds you a deal board** (stats, A–H tabs, waiting list, search) that it refreshes after every run; say "only AI and VPS" any time to narrow it.
 - When claiming needs a login, it asks you to **take over the browser** and sign in yourself; the session stays on the cloud computer.
 - Use a dedicated deals account; don't sign in to your main email, bank or exchange accounts on a cloud computer.
 
@@ -124,7 +125,7 @@ Local agents claim through your own browser (Claude in Chrome and similar extens
 
 ### What's inside
 
-`PROMPT.md` has the paste-in prompt in Chinese and English. `skills/deal-hunter/` holds `SKILL.md` (bilingual workflow), `references/sources.md` (where to look), `references/claiming.md` (sign-in per platform, claim flow, waiting list), `scripts/ledger.py` (local ledger, de-dupe, auto-archive, claim log, waiting-for-you list, A–H digest with `--lang zh|en`; Python stdlib only) and `scripts/feeds.py` (RSS/Atom reader).
+`PROMPT.md` has the paste-in prompt in Chinese and English. `skills/deal-hunter/` holds `SKILL.md` (bilingual workflow), `references/sources.md` (where to look), `references/claiming.md` (sign-in per platform, claim flow, waiting list), `scripts/dashboard.html` (board template for `ledger.py dashboard`), `scripts/ledger.py` (local ledger, de-dupe, auto-archive, claim log, waiting-for-you list, A–H digest with `--lang zh|en`; Python stdlib only) and `scripts/feeds.py` (RSS/Atom reader).
 
 ### Data sources
 

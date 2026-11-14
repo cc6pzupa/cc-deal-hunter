@@ -8,6 +8,7 @@
   ledger.py claim ID --result TEXT [--failed]
   ledger.py archive ID               archive manually (offer ended early) / 手动归档
   ledger.py digest [--days 1] [--lang zh|en]   Markdown digest / 日报
+  ledger.py dashboard [--lang zh|en] [--out PATH]   HTML board / 看板 (default ~/.deal-hunter/dashboard.html)
 """
 import argparse
 import datetime as dt
@@ -310,6 +311,20 @@ def cmd_digest(a, db, cfg):
     print("\n".join(out))
 
 
+def cmd_dashboard(a, db, cfg):
+    lang = a.lang or cfg.get("lang") or "zh"
+    t = now()
+    items = [dict(d, status=status(d, t)) for d in db.values()]
+    data = {"lang": lang, "generated": iso(t), "labels": LABELS[lang], "items": items}
+    tpl = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "dashboard.html"), encoding="utf-8").read()
+    payload = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")  # safe inside <script>
+    out = os.path.expanduser(a.out or os.path.join(HOME, "dashboard.html"))
+    os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
+    with open(out, "w", encoding="utf-8") as f:
+        f.write(tpl.replace("/*DATA*/{}", payload, 1))
+    print(json.dumps({"dashboard": out, "items": len(items)}, ensure_ascii=False))
+
+
 def cmd_config(a, cfg):
     if not os.path.exists(CFG) and not a.set:
         print(json.dumps({"configured": False, "defaults": DEFAULT_CFG, "path": CFG}, ensure_ascii=False, indent=1))
@@ -353,6 +368,9 @@ def main():
     p = sub.add_parser("digest")
     p.add_argument("--days", type=float, default=1)
     p.add_argument("--lang", choices=["zh", "en"], help="default: config lang / 默认取配置")
+    p = sub.add_parser("dashboard", help="write the HTML board / 生成看板")
+    p.add_argument("--lang", choices=["zh", "en"])
+    p.add_argument("--out", help="output path / 输出路径")
     a = ap.parse_args()
 
     cfg = {**DEFAULT_CFG, **load(CFG, {})}
@@ -375,6 +393,8 @@ def main():
         print(json.dumps({"id": a.id, "archived": True}))
     elif a.cmd == "digest":
         cmd_digest(a, db, cfg)
+    elif a.cmd == "dashboard":
+        cmd_dashboard(a, db, cfg)
     if changed:
         save(DB, db)
 

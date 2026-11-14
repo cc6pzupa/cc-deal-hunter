@@ -1,0 +1,22 @@
+{
+  "name": "deal-hunter",
+  "owner": {
+    "name": "cc羊毛减",
+    "url": "https://wool.eshop.us.ci"
+  },
+  "metadata": {
+    "description": "羊毛猎手 Deal Hunter — find, verify, track and auto-claim deals / 全网找羊毛、核对、去重、自动领取"
+  },
+  "plugins": [
+    {
+      "name": "deal-hunter",
+      "source": "./",
+      "description": "Find deals, verify them on official pages, and claim them in your own signed-in browser / 全网找羊毛，回官方页核对，用你自己登录的浏览器自动领",
+      "license": "PolyForm-Noncommercial-1.0.0",
+      "strict": false,
+      "skills": [
+        "./skills/deal-hunter"
+      ]
+    }
+  ]
+}

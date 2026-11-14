@@ -54,7 +54,7 @@ TEXT = {
 COST_TYPES = ["free", "trial", "deposit", "volume", "invite", "paid"]
 HOLD_REASONS = ["login", "card", "payment", "kyc", "code", "captcha", "wallet", "terms", "blocked", "other"]
 DEFAULT_CFG = {"interests": ["ai", "crypto", "ucard", "bank", "vps", "software", "other"],
-               "auto_claim": "free_only", "accounts": [], "lang": "zh", "birthdate": "", "profile": {}}
+               "auto_claim": "free_only", "accounts": [], "lang": "zh", "birthdate": "", "phone": "", "profile": {}}
 FIELDS_HELP = """Fields / 字段 (* required 必填):
   *title  *category (%s)  *official_url  *cost_type (%s)  *sources [url,...]
   offer 优惠内容 · value_usd number 数字 · value_note 价值说明 · conditions 参与条件 · regions [地区]
@@ -352,6 +352,7 @@ def make_profile():
         "website": "",
         "newsletter_and_marketing": "unchecked",
         "country_timezone_language": "use what the form pre-selects (matches the browser/IP)",
+        "address": {},  # filled once from IP location + a public place on the map / 首次按 IP 位置 + 地图上的公共地点填
     }
 
 

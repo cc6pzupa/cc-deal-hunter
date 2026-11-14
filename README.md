@@ -30,7 +30,7 @@
 
 ## 不会卡住：「🙋 待你处理」清单
 
-注册表单它会自己填（姓名邮箱用你 Google 的，生日、性别、职业、公司、用途等按成年人自动生成一套合理资料并固定复用）；要**邮箱验证码**的，它会直接去你的 Gmail 取码填上。要登录、付款、绑卡、充值、实名认证、短信验证码、人机验证、连接钱包、签名授权的，AI 不替你做，也**不会停下来等你**：放进「🙋 待你处理」清单，接着领下一条。整批跑完按原因分组给你，要登录的你接管一次全部登好，说「继续领」就行。
+注册表单它会自己填（姓名邮箱用你 Google 的，生日、性别、职业、公司、用途等按成年人自动生成一套合理资料并固定复用；手机号第一次问你一次，之后复用；地址按 IP 所在城市取一个公共地点）；要**邮箱验证码**的，它会直接去你的 Gmail 取码填上。要登录、付款、绑卡、充值、实名认证、短信验证码、人机验证、连接钱包、签名授权的，AI 不替你做，也**不会停下来等你**：放进「🙋 待你处理」清单，接着领下一条。整批跑完按原因分组给你，要登录的你接管一次全部登好，说「继续领」就行。
 
 一人一份，不注册小号，不绕过网站的机器人检测。详见 [`claiming.md`](skills/deal-hunter/references/claiming.md)。
 
@@ -118,7 +118,7 @@ Tips:
 
 ### Never stuck: the "🙋 Waiting for you" list
 
-Sign-up forms are filled for you (name and email from your Google account; birthday, gender, occupation, company, use case and similar fields from one auto-generated adult profile, reused everywhere). **Email verification codes** are fetched from your Gmail automatically. Anything that needs a sign-in, payment, card, deposit, KYC, SMS code, CAPTCHA, wallet connection or signature is never done for you and **never blocks the run**: it goes on a "🙋 Waiting for you" list and the agent moves on. At the end you get the list grouped by reason; take over once to sign in to all the sites, say "continue claiming", and it retries. One claim per person, no alt accounts, no bot-detection bypassing. See [`claiming.md`](skills/deal-hunter/references/claiming.md).
+Sign-up forms are filled for you (name and email from your Google account; birthday, gender, occupation, company, use case and similar fields from one auto-generated adult profile, reused everywhere; your phone number is asked once and reused; addresses use a public place in the IP's city). **Email verification codes** are fetched from your Gmail automatically. Anything that needs a sign-in, payment, card, deposit, KYC, SMS code, CAPTCHA, wallet connection or signature is never done for you and **never blocks the run**: it goes on a "🙋 Waiting for you" list and the agent moves on. At the end you get the list grouped by reason; take over once to sign in to all the sites, say "continue claiming", and it retries. One claim per person, no alt accounts, no bot-detection bypassing. See [`claiming.md`](skills/deal-hunter/references/claiming.md).
 
 ### Other AIs
 

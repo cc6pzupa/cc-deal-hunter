@@ -54,7 +54,7 @@ TEXT = {
 COST_TYPES = ["free", "trial", "deposit", "volume", "invite", "paid"]
 HOLD_REASONS = ["login", "card", "payment", "kyc", "code", "captcha", "wallet", "terms", "blocked", "other"]
 DEFAULT_CFG = {"interests": ["ai", "crypto", "ucard", "bank", "vps", "software", "other"],
-               "auto_claim": "free_only", "accounts": [], "lang": "zh"}
+               "auto_claim": "free_only", "accounts": [], "lang": "zh", "birthdate": ""}
 FIELDS_HELP = """Fields / 字段 (* required 必填):
   *title  *category (%s)  *official_url  *cost_type (%s)  *sources [url,...]
   offer 优惠内容 · value_usd number 数字 · value_note 价值说明 · conditions 参与条件 · regions [地区]
@@ -325,7 +325,21 @@ def cmd_dashboard(a, db, cfg):
     print(json.dumps({"dashboard": out, "items": len(items)}, ensure_ascii=False))
 
 
+def adult_birthdate():
+    """Adult birthdate for sign-up forms: age 25-35, generated once and reused. / 注册表单用的成人生日，25-35 岁，生成一次后固定复用."""
+    import random
+    today = dt.date.today()
+    d = today.replace(year=today.year - random.randint(25, 35)) - dt.timedelta(days=random.randint(0, 364))
+    return d.isoformat()
+
+
 def cmd_config(a, cfg):
+    if a.birthdate:
+        if not cfg.get("birthdate"):
+            cfg["birthdate"] = adult_birthdate()
+            save(CFG, cfg)
+        print(json.dumps({"birthdate": cfg["birthdate"]}))
+        return
     if not os.path.exists(CFG) and not a.set:
         print(json.dumps({"configured": False, "defaults": DEFAULT_CFG, "path": CFG}, ensure_ascii=False, indent=1))
         return
@@ -337,6 +351,13 @@ def cmd_config(a, cfg):
             raise SystemExit("auto_claim: off | free_only | ask")
         if k == "lang" and v not in ("zh", "en"):
             raise SystemExit("lang: zh | en")
+        if k == "birthdate":
+            try:
+                b = dt.date.fromisoformat(v)
+            except ValueError:
+                raise SystemExit("birthdate: YYYY-MM-DD")
+            if (dt.date.today() - b).days < 18 * 365.25:
+                raise SystemExit("birthdate must be an adult (18+) / 生日要满 18 岁")
         cfg[k] = [x.strip() for x in v.split(",") if x.strip()] if isinstance(DEFAULT_CFG[k], list) else v
     if a.set:
         save(CFG, cfg)
@@ -348,6 +369,7 @@ def main():
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("config")
     p.add_argument("--set", nargs="*", metavar="KEY=VALUE")
+    p.add_argument("--birthdate", action="store_true", help="print the saved adult birthdate, creating it once / 取注册用的成人生日（没有就生成一次）")
     sub.add_parser("add", description=FIELDS_HELP, formatter_class=argparse.RawDescriptionHelpFormatter)
     p = sub.add_parser("list")
     p.add_argument("--category", choices=CATEGORIES)

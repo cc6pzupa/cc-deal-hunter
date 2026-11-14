@@ -99,6 +99,11 @@ Read `references/claiming.md` first. In short / 先读 `references/claiming.md`�
   先判断手上是哪种浏览器：平台自带的云电脑或云端浏览器（Grok Bot、Muse、ChatGPT Work 等，需要登录时请用户**接管**后自己登录，登录会保留），还是用户本机的浏览器。都没有就只列步骤，不自动领。
 - Use the user's own signed-in account; one claim per offer. / 用用户自己的账号，一个活动领一份。
 - With `auto_claim=free_only` (default), claim `cost_type=free`, `verified=true` items with no card/KYC/wallet straight away. / `free_only`（默认）真正免费、已核对、不绑卡不实名的直接领。
+- **Sign-up forms / 注册表单**：fill them yourself, don't park them. / 自己填，不进待处理。
+  - Name, email: from the signed-in Google account. / 姓名、邮箱：用已登录的 Google 账号里的。
+  - Birthday / age / "Are you 18+": use the saved adult birthdate — `ledger.py config --birthdate` (generated once at age 25–35, then reused on every site so it stays consistent). Without the script, generate one adult birthdate once, remember it, and reuse it. / 生日、年龄、"是否满 18 岁"：用保存的成人生日（`ledger.py config --birthdate`，第一次生成 25–35 岁的日期，之后所有网站都用同一个，保持一致）。不能跑脚本就自己生成一个成人生日记住，之后一直用它。
+  - Optional fields (company, job title, how did you hear about us…): skip, or pick the most neutral option. / 选填项（公司、职位、从哪知道的…）：跳过或选最普通的选项。
+  - Real-name verification, ID numbers, phone numbers, home address, payment details: park as `kyc` / `code` / `card`. / 实名、证件号、手机号、住址、支付信息：放进待处理。
 - **Email verification codes: get them yourself.** When a site emails a code or a confirmation link, open https://mail.google.com in the same browser (the user's Google is signed in), find the newest message from that site, and enter the code or open the link. Use the platform's Gmail connector instead if it has one. Only if nothing arrives within a couple of minutes, park it as `code`.
   **邮箱验证码自己去取。** 网站发了邮箱验证码或确认链接，就在同一个浏览器打开 https://mail.google.com （Google 已登录），找到这个网站最新的那封邮件，填验证码或点确认链接；平台有 Gmail 连接器就用连接器。等几分钟还没收到，才放进待处理（`code`）。
 - **Keep the batch moving.** When an item needs something only the user can do — sign-in, card binding, payment, deposit, KYC/ID, SMS code, CAPTCHA, wallet connect/sign, terms to accept, or the site blocks automation — park it with `ledger.py hold <id> --reason login|card|payment|kyc|code|captcha|wallet|terms|blocked|other --note "where it stopped"` and **move on to the next item**.

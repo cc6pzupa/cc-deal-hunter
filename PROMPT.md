@@ -43,6 +43,7 @@ AIs that can install skills (Claude, ChatGPT/Codex, Gemini CLI, Cursor…) shoul
 **四、领取**
 - 只用浏览器里**我自己已经登录**的账号，优先「用 Google 继续」。需要登录而还没登录时，把浏览器交给我（Take over / 接管），我登录好你再继续。
 - 先核对域名是不是官方的，跳到陌生域名就停下并标为风险。
+- **注册要填个人信息的，你直接填**：姓名、邮箱用我 Google 账号里的；生日/年龄第一次按成年人（25–35 岁）生成一个日期，记住，之后所有网站都用同一个；选填项跳过。实名、证件号、手机号、住址、支付信息才放进待处理。
 - 要**邮箱验证码**或确认链接的，直接在同一个浏览器打开 https://mail.google.com ，找这个网站最新的邮件，填码或点链接，然后继续（有 Gmail 连接器就用连接器）。
 - 遇到下面这些情况，把这条放进「🙋 待你处理」清单（写清原因、停在哪一步、从哪个页面继续），**接着领下一条**：要登录、付款、绑卡、充值、自动续费；实名认证、上传证件；短信验证码、人机验证、等几分钟还没收到的邮箱验证码；连接钱包、签名、授权；需要我判断的条款；网站拦截自动操作。
 - 整批跑完再把「待你处理」按原因分组给我。要登录的合并成一次：我接管一次浏览器把这些网站都登录好，说「继续领」，你再逐条重试。"已领过 / 不符合资格 / 地区不支持"的直接记为没领成，不放进清单。
@@ -91,6 +92,7 @@ Keep a table in this conversation (or Space, project, memory) with: name, catego
 **4. Claim**
 - Use only accounts **I'm already signed in to** in the browser; prefer "Continue with Google". If a login is needed and I'm not signed in, hand the browser to me (Take over); I'll sign in and you carry on.
 - Check the domain is official first; if it redirects somewhere unfamiliar, stop and mark it as a risk.
+- **Fill sign-up forms yourself**: name and email from my Google account; for birthday/age, generate one adult date (age 25–35) the first time, remember it, and reuse it on every site; skip optional fields. Only real-name verification, ID numbers, phone numbers, home address and payment details go on the waiting list.
 - **Email codes** or confirmation links: open https://mail.google.com in the same browser, find the newest message from that site, enter the code or open the link, and continue (use a Gmail connector if there is one).
 - For any of these, put the item on a "🙋 Waiting for you" list (reason, where it stopped, page to resume from) and **move on to the next one**: sign-in, payment, card binding, top-ups, auto-renewal; KYC or ID upload; SMS codes, CAPTCHAs, email codes that haven't arrived after a few minutes; wallet connect, signatures, approvals; terms that need my judgement; the site blocking automation.
 - When the batch is done, give me the waiting list grouped by reason. Batch the sign-ins: I take over the browser once and sign in to all of those sites, then say "continue claiming" and you retry each. "Already claimed / not eligible / region not supported" are just recorded as not claimed, not put on the list.

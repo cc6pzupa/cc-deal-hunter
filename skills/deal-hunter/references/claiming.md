@@ -14,7 +14,7 @@ Claiming uses accounts already signed in to the browser — most often Google, t
 | Muse (Meta, built-in cloud computer) | Same: ask the user to take over the browser and sign in / 同样请用户接管浏览器登录 | Kept on the cloud computer; keep records in a dedicated Space / 保留在云电脑里，记录放进专门的 Space |
 | Other agents with a cloud computer (Manus…) | Use the platform's take-over / hand-off feature / 用平台的接管功能 | Per platform docs / 以平台说明为准 |
 
-- First time: open https://accounts.google.com , ask the user to take over and sign in, then confirm the avatar shows. / 第一次先打开 Google 登录页请用户接管登录，确认右上角显示头像。
+- At the start: open https://accounts.google.com ; if not signed in, start a take-over immediately (no question) and continue once the avatar shows. / 开局打开 Google 登录页，没登录就直接发起接管，看到头像就继续。
 - If the platform has connectors / connected apps (Muse, ChatGPT apps…), use them to read verification or promo emails. / 有官方连接器就用连接器读验证邮件和活动通知。
 
 ### B. The user's local browser / 用户本机的浏览器

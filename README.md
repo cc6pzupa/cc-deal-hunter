@@ -18,7 +18,7 @@
 
 几个建议：
 - 放进一个专门的 **Space / 项目**，记录和设置都留在里面；平台有定时任务的话，让它每 2 小时自动跑一次。
-- 不用先填一堆设置：它会自己看你登录了哪些账号，然后直接开工；想改范围随时说一句，比如「只要 AI 和 VPS」。
+- 不用先填设置：开局它先查 Google，没登录就直接弹接管让你登录，登好就开工；想改范围随时说一句，比如「只要 AI 和 VPS」。
 - 自动领取需要登录时，它会请你**接管浏览器**，你自己输密码；登录之后一直保留在云电脑里。
 - 建议用一个专门薅羊毛的账号，不要在云电脑里登录主力邮箱、银行或交易所账号。
 
@@ -105,7 +105,7 @@ Install this skill: https://github.com/cc6pzupa/cc-deal-hunter
 
 Tips:
 - Put it in a dedicated **Space / project** so records and settings stay there; if the platform has scheduled tasks, have it run every 2 hours.
-- No setup questionnaire: it checks which accounts you're signed in to and gets going; say "only AI and VPS" any time to narrow it.
+- No setup questionnaire: it checks Google first, pops up a take-over for you to sign in if needed, then gets going; say "only AI and VPS" any time to narrow it.
 - When claiming needs a login, it asks you to **take over the browser** and sign in yourself; the session stays on the cloud computer.
 - Use a dedicated deals account; don't sign in to your main email, bank or exchange accounts on a cloud computer.
 

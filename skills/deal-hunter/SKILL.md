@@ -21,10 +21,9 @@ Files in this skill / 本 skill 的文件：
 
 Don't open with a questionnaire — start working. / 不要先问一串问题，直接开工。
 
-1. **Detect signed-in accounts yourself.** If you have a browser, open google.com, github.com and x.com and check whether each shows the user as signed in. Save what you find: `ledger.py config --set accounts=google,github`.
-   **自己检查已登录的账号。** 有浏览器就打开 google.com、github.com、x.com，看是不是已经登录，结果存进 `accounts`。
-2. **Ask once, only if it matters.** Tell the user in one line what you found and, if Google isn't signed in, ask whether to take over and sign in now or carry on (login-only items will wait on the "Waiting for you" list). Then start.
-   **最多问一句。** 一行告诉用户查到了什么；Google 没登录的话，问一句现在要不要接管登录，还是先跑（要登录的会进「待你处理」）。然后开始。
+1. **Check Google first.** Open https://accounts.google.com . If the user isn't signed in, **bring up the sign-in right away — don't ask**: on a cloud computer start a take-over on that page; in a local browser leave the page open and send the user the link to sign in. Once signed in, carry on.
+   **开局先查 Google。** 打开 https://accounts.google.com ，没登录就**直接弹出登录，不用问**：云电脑上直接发起接管；本机浏览器就把登录页开着、把链接发给用户。登录好就继续。
+2. Glance at github.com and x.com too and save what's signed in: `ledger.py config --set accounts=google,github`. Don't stop for those — sites that need them go on the waiting list. / 顺手看一下 github.com、x.com，把已登录的存进 `accounts`；这两个没登录不用停，要用到的活动进「待你处理」。
 3. Language: answer in the language the user wrote in, and save it (`--set lang=zh|en`). / 用户用什么语言就用什么语言，顺手存下来。
 
 Defaults, no need to ask / 默认值，不用问：all categories 全部类别 · `auto_claim=free_only` (truly free ones are claimed straight away; everything else goes on the waiting list / 真正免费的直接领，其他进待处理). The user can change them any time by saying so, e.g. "only AI and VPS" or "ask before each claim". / 用户随时一句话就能改，比如「只要 AI 和 VPS」「每条领之前问我」。

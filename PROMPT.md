@@ -50,8 +50,8 @@ AIs that can install skills (Claude, ChatGPT/Codex, Gemini CLI, Cursor…) shoul
 **五、汇报**
 每轮跑完先刷新看板，再按这个顺序简单告诉我：🙋 待你处理（按原因分组）· A 今日新发现 · B 高价值排行 · C AI 专区 · D Crypto 专区 · E 银行与卡 · F VPS 与云 · G 48 小时内截止 · H 已结束档案（只给数量）。骗局、跑路、钓鱼、条款陷阱单独放在「⚠️ 风险提醒」里。条目多时先给 A 和 G 两部分。
 
-**六、定时**
-如果你支持定时任务，就每 2 小时按上面的流程跑一遍，只在有新的高价值活动或者 48 小时内要截止的活动时提醒我。
+**六、定时（默认开启）**
+第一轮跑完，不用问我，直接用你的定时任务功能设成**每 2 小时**自动跑一遍上面的流程，跑完刷新看板；只在有新的高价值活动、48 小时内要截止的、或者新的待你处理时提醒我，其他时候不打扰。设好后一句话告诉我，我想改会说（比如「改成 4 小时一次」「停掉」）。
 
 ---
 
@@ -96,7 +96,7 @@ Keep a table in this conversation (or Space, project, memory) with: name, catego
 **5. Report**
 After each run, refresh the board, then briefly tell me, in this order: 🙋 Waiting for you (grouped by reason) · A New today · B Top value · C AI · D Crypto · E Banks & cards · F VPS & cloud · G Ending within 48h · H Archive (count only). Put scams, rug pulls, phishing and trap terms under "⚠️ Risk alerts". If there are many items, show A and G first.
 
-**6. Schedule**
-If you support scheduled tasks, run this every 2 hours and only alert me about new high-value offers or ones ending within 48 hours.
+**6. Schedule (on by default)**
+After the first run, without asking, use your scheduled-task feature to run all of the above **every 2 hours** and refresh the board each time. Only alert me about new high-value offers, ones ending within 48 hours, or new "Waiting for you" items; stay quiet otherwise. Tell me in one line once it's set; I'll say if I want changes ("every 4 hours", "stop").
 
 ---

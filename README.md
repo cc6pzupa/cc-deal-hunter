@@ -17,7 +17,8 @@
 **方法二：复制一段话。** 打开 [`PROMPT.md`](PROMPT.md)，复制「中文版」那一段发给它。
 
 几个建议：
-- 放进一个专门的 **Space / 项目**，记录和设置都留在里面；平台有定时任务的话，让它每 2 小时自动跑一次。
+- **默认定时**：第一轮跑完它会自己设好每 2 小时跑一次（用平台的定时任务），只在有新的高价值、快截止或待你处理时提醒你；想改就说「改成 4 小时一次」「停掉」。
+- 放进一个专门的 **Space / 项目**，记录和设置都留在里面。
 - 不用先填设置：开局它先查 Google，没登录就直接弹接管让你登录，然后**给你建一个羊毛看板**（统计、A–H 分栏、待你处理、搜索），之后每跑一轮刷新；想改范围随时说一句，比如「只要 AI 和 VPS」。
 - 自动领取需要登录时，它会请你**接管浏览器**，你自己输密码；登录之后一直保留在云电脑里。
 - 建议用一个专门薅羊毛的账号，不要在云电脑里登录主力邮箱、银行或交易所账号。
@@ -105,7 +106,8 @@ Install this skill: https://github.com/cc6pzupa/cc-deal-hunter
 **Option 2 — paste the prompt.** Copy the English block from [`PROMPT.md`](PROMPT.md#english) and send it.
 
 Tips:
-- Put it in a dedicated **Space / project** so records and settings stay there; if the platform has scheduled tasks, have it run every 2 hours.
+- **Scheduled by default**: after the first run it sets itself to run every 2 hours (via the platform's scheduled tasks) and only pings you about new high-value, ending-soon or waiting items; say "every 4 hours" or "stop" to change it.
+- Put it in a dedicated **Space / project** so records and settings stay there.
 - No setup questionnaire: it checks Google first, pops up a take-over for you to sign in if needed, then **builds you a deal board** (stats, A–H tabs, waiting list, search) that it refreshes after every run; say "only AI and VPS" any time to narrow it.
 - When claiming needs a login, it asks you to **take over the browser** and sign in yourself; the session stays on the cloud computer.
 - Use a dedicated deals account; don't sign in to your main email, bank or exchange accounts on a cloud computer.

@@ -8,8 +8,8 @@ description: 羊毛猎手 Deal Hunter — find deals across the web, verify each
 **Language / 语言**：Reply in the user's language. If the user writes in Chinese, answer in Chinese; otherwise answer in English (or the user's language). Pass `--lang zh` or `--lang en` to `ledger.py digest` to match.
 用户用什么语言，你就用什么语言回复；生成日报时给 `ledger.py digest` 加对应的 `--lang zh` 或 `--lang en`。
 
-Goal: the user never has to browse for deals. You **discover → verify → classify → de-duplicate → record → claim → archive**.
-目标：用户不用每天自己刷，你负责 **发现 → 核对 → 分类 → 去重 → 记账 → 领取 → 归档**。
+Goal: the user never has to browse for deals. You **discover → verify → classify → de-duplicate → record → claim → archive**, on a schedule (every 2 hours by default).
+目标：用户不用每天自己刷，你负责 **发现 → 核对 → 分类 → 去重 → 记账 → 领取 → 归档**，并且定时自动跑（默认每 2 小时）。
 
 Files in this skill / 本 skill 的文件：
 - `references/sources.md` — where to look for each category / 每类去哪找、怎么搜
@@ -104,7 +104,14 @@ A New today 今日新发现 · B Top value 高价值排行 · C AI · D Crypto �
 Each item shows title, category, offer, value, cost type, conditions, regions, deadline, official link, sources, last verified, risks. `risk` items (scams, rug pulls, phishing, trap terms) go under "⚠️ Risk alerts / 风险提醒". If there are many, show A and G first and ask before expanding.
 每条都包含上述字段；风险类单独列出；条目多时先给 A 和 G。
 
-## 6. Scheduling / 定时运行
+## 6. Schedule it — by default / 定时运行（默认开启）
 
-If the user wants it "every 2 hours / 每 2 小时": when the platform supports scheduled tasks (Claude scheduled tasks, cron, `/loop`…), schedule "run deal-hunter: discover → verify → record → claim per auto_claim → report only new high-value or ending-within-48h items". Otherwise tell the user to just say "find deals / 找羊毛" each time.
-平台支持定时任务就按上面的流程设好；不支持就告诉用户每次说一句即可。
+This is a recurring job, not a one-off. At the end of the first run, **create the schedule yourself without asking**: every 2 hours, using the platform's own scheduler — Grok Bot / ChatGPT Work scheduled tasks, Muse Space background updates, Claude scheduled tasks or `/loop`, or cron where you have a shell. Tell the user in one line that it's on and how to change or stop it ("every 4 hours", "only mornings", "stop").
+这是一个定时任务，不是跑一次就完。第一轮跑完，**不用问，直接设好定时**：每 2 小时一次，用平台自己的定时功能（Grok Bot / ChatGPT Work 的定时任务、Muse Space 的后台更新、Claude 的定时任务或 `/loop`，有 shell 就用 cron）。用一句话告诉用户已开启，以及怎么改或关（"改成 4 小时一次""只在早上跑""停掉"）。
+
+Each scheduled run / 每次定时运行：discover → verify → record → claim per `auto_claim` → refresh the board → **notify only** when there are new high-value items, items ending within 48h, or new "Waiting for you" items; stay silent otherwise.
+发现 → 核对 → 记账 → 按 `auto_claim` 领取 → 刷新看板 → **只在**有新的高价值活动、48 小时内截止、或新的待你处理时才提醒，其余时候不打扰。
+
+Cron example (local) / 本机 cron 示例：`0 */2 * * * <agent CLI> "run deal-hunter"` — use whatever non-interactive command the user's agent provides. / 换成用户所用 agent 的非交互命令。
+
+If the platform has no scheduler at all, say so once and tell the user to say "find deals / 找羊毛" when they want a run. / 平台完全没有定时功能，就说一次，让用户想跑的时候说一句。

@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Deal Hunter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap">
 <style>
 :root { --bg:#f6f7f9; --card:#fff; --line:#e3e6ea; --text:#15181c; --muted:#68707a; --brand:#0e9f6e; --on-brand:#fff;
         --warn:#b45309; --warn-soft:#fef3c7; --risk:#b91c1c; --risk-soft:#fee2e2; --ok:#047857; --ok-soft:#d1fae5; --chip:#eef1f4; }
@@ -12,7 +15,8 @@
           --warn:#fbbf24; --warn-soft:#3a2a07; --risk:#f87171; --risk-soft:#3b1212; --ok:#34d399; --ok-soft:#06281c; --chip:#1e2428; }
 }
 * { box-sizing: border-box; }
-body { margin:0; background:var(--bg); color:var(--text); font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+button, input { font: inherit; }
+body { margin:0; background:var(--bg); color:var(--text); font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans SC",sans-serif; }
 .wrap { max-width:1100px; margin:0 auto; padding:16px; }
 header { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin-bottom:14px; }
 h1 { font-size:20px; margin:0; }
@@ -67,14 +71,14 @@ const DATA = /*DATA*/{};
 const T = {
   zh: { h1:"羊毛猎手 · 看板", updated:"更新于 {t}", search:"搜索名称、内容、来源…", empty:"这里暂时没有内容",
         s_active:"进行中", s_new:"今日新增", s_exp:"48 小时内截止", s_pending:"待你处理", s_unv:"待核实", s_claimed:"已领", s_value:"已确认价值 $",
-        t_pending:"🙋 待你处理", t_A:"A · 今日新发现", t_B:"B · 高价值", t_C:"C · AI", t_D:"D · Crypto", t_E:"E · 银行与卡", t_F:"F · VPS 与云",
+        t_pending:"待你处理", t_A:"A · 今日新发现", t_B:"B · 高价值", t_C:"C · AI", t_D:"D · Crypto", t_E:"E · 银行与卡", t_F:"F · VPS 与云",
         t_G:"G · 即将截止", t_H:"H · 已结束", t_risk:"⚠️ 风险", t_all:"全部",
         pendingHint:"按原因分组。要登录的可以一次接管浏览器全部登好，然后跟 AI 说「继续领」。",
         unverified:"待核实", claimed:"已领", ended:"已结束", deadline:"截止", noDeadline:"未写明截止", regions:"地区", sources:"来源 {n} 个",
         verified:"核对于 {t}", stoppedAt:"停在", resume:"继续页面", conditions:"条件", valueNa:"价值未写明" },
   en: { h1:"Deal Hunter · Board", updated:"Updated {t}", search:"Search name, offer, source…", empty:"Nothing here yet",
         s_active:"Active", s_new:"New today", s_exp:"Ending within 48h", s_pending:"Waiting for you", s_unv:"Unverified", s_claimed:"Claimed", s_value:"Confirmed value $",
-        t_pending:"🙋 Waiting for you", t_A:"A · New today", t_B:"B · Top value", t_C:"C · AI", t_D:"D · Crypto", t_E:"E · Banks & cards", t_F:"F · VPS & cloud",
+        t_pending:"Waiting for you", t_A:"A · New today", t_B:"B · Top value", t_C:"C · AI", t_D:"D · Crypto", t_E:"E · Banks & cards", t_F:"F · VPS & cloud",
         t_G:"G · Ending soon", t_H:"H · Archive", t_risk:"⚠️ Risk", t_all:"All",
         pendingHint:"Grouped by reason. Take over the browser once to sign in to all of these, then tell the AI \"continue claiming\".",
         unverified:"unverified", claimed:"claimed", ended:"ended", deadline:"ends", noDeadline:"no deadline stated", regions:"regions", sources:"{n} source(s)",

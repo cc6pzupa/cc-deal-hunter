@@ -35,6 +35,8 @@ Sign-in check / 登录检查：
 
 1. **Check Google first.** Open https://accounts.google.com . If the user isn't signed in, **bring up the sign-in right away — don't ask**: on a cloud computer start a take-over on that page; in a local browser leave the page open and send the user the link to sign in. Once signed in, carry on.
    **开局先查 Google。** 打开 https://accounts.google.com ，没登录就**直接弹出登录，不用问**：云电脑上直接发起接管；本机浏览器就把登录页开着、把链接发给用户。登录好就继续。
+   **Google 2-step on a new device / Google 新设备两步验证**：the first sign-in from a cloud computer usually triggers "Check your phone" — Google shows a number on the page and sends a prompt to the user's phone, where they must tap the same number. As soon as that page appears, **read the number and tell the user in one clear line**, e.g. "📱 Google 发到你手机了：点 **47**" / "📱 Google sent a prompt to your phone — tap **47**". Keep watching; when the page moves on, continue. If it times out, click "Resend" / "重新发送" and send the new number. If Google offers other ways ("Try another way"), let the user pick.
+   第一次在云电脑登录 Google，通常会出现「查看你的手机」：页面上显示一个数字，同时给用户手机发确认，用户要在手机上点同样的数字。这个页面一出现，**马上把数字读出来用一句话告诉用户**，比如「📱 Google 发到你手机了：点 **47**」。盯着页面，通过了就继续；超时就点「重新发送」再报新数字。页面给了「试试其他方式」的，让用户自己选。
 2. Glance at github.com and x.com too and save what's signed in: `ledger.py config --set accounts=google,github`. Don't stop for those — sites that need them go on the waiting list. / 顺手看一下 github.com、x.com，把已登录的存进 `accounts`；这两个没登录不用停，要用到的活动进「待你处理」。
 3. Language: answer in the language the user wrote in, and save it (`--set lang=zh|en`). / 用户用什么语言就用什么语言，顺手存下来。
 

@@ -22,6 +22,7 @@
 - 放进一个专门的 **Space / 项目**，记录和设置都留在里面。
 - 不用先填设置：开局它先查 Google，没登录就直接弹接管让你登录，然后**给你建一个羊毛看板**（统计、A–H 分栏、待你处理、搜索），之后每跑一轮刷新；想改范围随时说一句，比如「只要 AI 和 VPS」。
 - 自动领取需要登录时，它会请你**接管浏览器**，你自己输密码；登录之后一直保留在云电脑里。
+- 第一次在云电脑登录 Google，Google 会让你在手机上点一个数字确认——**它会直接把数字告诉你**，你在手机上点同样的数字就行。
 - 建议用一个专门薅羊毛的账号，不要在云电脑里登录主力邮箱、银行或交易所账号。
 
 > **给 AI 看的说明 / For AI agents**：「安装」= 在这一轮里把全部设置做完，不要只复制文件就停。不能安装 skill 的（Grok Bot、Muse、ChatGPT Work 等）：读取 [`PROMPT.md`](PROMPT.md) 里用户语言的那一段，当作长期指令，**立刻**按它开头的五步做完：查 Google 登录（没登录直接弹接管）→ 建看板 → 设每 2 小时定时 → 跑第一轮 → 一条消息汇报。能安装 skill 的：把 `skills/deal-hunter/` 复制到 skills 目录，然后**立刻**按 `SKILL.md` 第 0 节同样做完这五步。
@@ -112,6 +113,7 @@ Tips:
 - Put it in a dedicated **Space / project** so records and settings stay there.
 - No setup questionnaire: it checks Google first, pops up a take-over for you to sign in if needed, then **builds you a deal board** (stats, A–H tabs, waiting list, search) that it refreshes after every run; say "only AI and VPS" any time to narrow it.
 - When claiming needs a login, it asks you to **take over the browser** and sign in yourself; the session stays on the cloud computer.
+- The first Google sign-in on a cloud computer usually asks you to tap a number on your phone — **the agent tells you the number**; just tap the same one.
 - Use a dedicated deals account; don't sign in to your main email, bank or exchange accounts on a cloud computer.
 
 ### Never stuck: the "🙋 Waiting for you" list

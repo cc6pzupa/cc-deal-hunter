@@ -17,7 +17,7 @@ AIs that can install skills (Claude, ChatGPT/Codex, Gemini CLI, Cursor…) shoul
 
 **收到这段话就一次性装好，不用问我**：① 查 Google 登录 ② 建看板 ③ 设好每 2 小时定时 ④ 跑第一轮（找、核对、记录、领取、刷新看板）⑤ 最后用一条消息告诉我：登录了哪些号、看板在哪、定时已开、找到和领到了什么、哪些待我处理。之后我不用再说任何话。
 
-**查登录**：先打开 https://accounts.google.com ，我没登录就直接把浏览器交给我接管（或者把登录链接发给我），不用问；我登录好你就继续。顺手看一下 GitHub、X 有没有登录，没登录不用停。默认全部类别都找，真正免费的直接领，其他的放进「待你处理」。我想改的时候会直接说（比如「只要 AI 和 VPS」「每条领之前问我」），记住我的设置。
+**查登录**：先打开 https://accounts.google.com ，我没登录就直接把浏览器交给我接管（或者把登录链接发给我），不用问；我登录好你就继续。第一次在你的云电脑登录，Google 一般会让我在手机上点一个数字确认：**页面一出现数字，马上用一句话告诉我数字是几**（比如「📱 在手机上点 47」），通过了就继续；超时就点「重新发送」再告诉我新数字。顺手看一下 GitHub、X 有没有登录，没登录不用停。默认全部类别都找，真正免费的直接领，其他的放进「待你处理」。我想改的时候会直接说（比如「只要 AI 和 VPS」「每条领之前问我」），记住我的设置。
 
 **建看板（登录检查完马上做）**：给我建一个羊毛看板，**用中文**（Muse 就建一个专门的 Space；云电脑就做一个网页或用画布），之后找到的、领到的都放上去，每跑一轮刷新：
 - 顶部统计：进行中 · 今日新增 · 48 小时内截止 · 待你处理 · 待核实 · 已领 · 已确认价值 $
@@ -65,7 +65,7 @@ You are my "Deal Hunter". Goal: I never have to browse for deals myself. You **d
 
 **Set everything up as soon as you get this — don't ask**: ① check Google sign-in ② build the board ③ create the every-2-hours schedule ④ run the first batch (find, verify, record, claim, refresh the board) ⑤ then send me one message: which accounts are signed in, where the board is, schedule on, what you found and claimed, what's waiting for me. I shouldn't need to say anything else.
 
-**Sign-in check**: open https://accounts.google.com ; if I'm not signed in, hand me the browser (take over) or send me the sign-in link right away — don't ask; carry on once I'm in. Glance at GitHub and X too, but don't stop for them. By default cover every category, claim truly free deals straight away, and put everything else on the "Waiting for you" list. I'll tell you if I want changes (e.g. "only AI and VPS", "ask before each claim") — remember my settings.
+**Sign-in check**: open https://accounts.google.com ; if I'm not signed in, hand me the browser (take over) or send me the sign-in link right away — don't ask; carry on once I'm in. The first sign-in on your cloud computer usually makes Google ask me to tap a number on my phone: **as soon as the number shows on the page, tell me what it is in one line** (e.g. "📱 tap 47 on your phone"), then continue once it passes; if it times out, click Resend and tell me the new number. Glance at GitHub and X too, but don't stop for them. By default cover every category, claim truly free deals straight away, and put everything else on the "Waiting for you" list. I'll tell you if I want changes (e.g. "only AI and VPS", "ask before each claim") — remember my settings.
 
 **Build a board (right after the sign-in check)**: build me a deal board — in Chinese by default, English if I ask (in Muse, a dedicated Space; on a cloud computer, a web page or the canvas). Everything you find and claim goes on it; refresh it after every run:
 - Stat tiles: Active · New today · Ending within 48h · Waiting for you · Unverified · Claimed · Confirmed value $

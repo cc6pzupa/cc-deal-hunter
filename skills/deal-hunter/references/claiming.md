@@ -15,6 +15,7 @@ Claiming uses accounts already signed in to the browser — most often Google, t
 | Other agents with a cloud computer (Manus…) | Use the platform's take-over / hand-off feature / 用平台的接管功能 | Per platform docs / 以平台说明为准 |
 
 - At the start: open https://accounts.google.com ; if not signed in, start a take-over immediately (no question) and continue once the avatar shows. / 开局打开 Google 登录页，没登录就直接发起接管，看到头像就继续。
+- **Google number prompt / Google 数字确认**：on a new device Google often shows a number and asks the user to tap it on their phone. Read the number off the screen and tell the user right away ("📱 tap **47** on your phone"); continue when the page moves on; on timeout click Resend and report the new number. Same for other sites that show a number to match. / 新设备登录 Google 常会显示一个数字、要用户在手机上点同样的数字：马上把数字告诉用户（「📱 在手机上点 **47**」），通过就继续，超时点重新发送再报新数字。其他网站要求核对数字的同样处理。
 - Email codes and confirmation links: open https://mail.google.com in the same browser and read the newest message from that site (or use the platform's Gmail connector). / 邮箱验证码、确认链接：同一个浏览器打开 Gmail 看这个网站最新的邮件（平台有 Gmail 连接器就用连接器）。
 
 ### B. The user's local browser / 用户本机的浏览器

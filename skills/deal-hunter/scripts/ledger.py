@@ -8,7 +8,7 @@
   ledger.py claim ID --result TEXT [--failed]
   ledger.py archive ID               archive manually (offer ended early) / 手动归档
   ledger.py digest [--days 1] [--lang zh|en]   Markdown digest / 日报
-  ledger.py dashboard [--lang zh|en] [--out PATH]   HTML board / 看板 (default ~/.deal-hunter/dashboard.html)
+  ledger.py dashboard [--lang zh|en] [--out PATH]   HTML board, Chinese by default / 看板，默认中文 (~/.deal-hunter/dashboard.html)
 """
 import argparse
 import datetime as dt
@@ -312,10 +312,10 @@ def cmd_digest(a, db, cfg):
 
 
 def cmd_dashboard(a, db, cfg):
-    lang = a.lang or cfg.get("lang") or "zh"
+    lang = a.lang or "zh"  # board opens in Chinese; it has a 中文/EN toggle / 看板默认中文，可一键切换
     t = now()
     items = [dict(d, status=status(d, t)) for d in db.values()]
-    data = {"lang": lang, "generated": iso(t), "labels": LABELS[lang], "items": items}
+    data = {"lang": lang, "generated": iso(t), "labels": LABELS, "items": items}
     tpl = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "dashboard.html"), encoding="utf-8").read()
     payload = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")  # safe inside <script>
     out = os.path.expanduser(a.out or os.path.join(HOME, "dashboard.html"))

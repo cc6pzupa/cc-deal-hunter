@@ -44,7 +44,8 @@ What it shows / 看板内容：
 - **Card per deal / 每条一张卡片**：category, cost type, unverified / claimed / waiting-reason tags; value; title linking to the official page; offer; deadline, regions, sources, last verified; conditions; risks; for waiting items, where it stopped and the page to resume / 分类、成本类型、待核实/已领/待处理原因标签；价值；标题链到官方页；内容；截止、地区、来源数、核对时间；条件；风险；待处理的写停在哪一步和继续页面
 
 How to build it on each platform / 各平台怎么建：
-- **Can run Python / 能运行 Python**：`python3 scripts/ledger.py dashboard --lang zh|en` writes a self-contained HTML board to `~/.deal-hunter/dashboard.html`; open it in the browser and give the user the path. Re-run after every batch. / 生成单文件 HTML 看板，用浏览器打开并把路径告诉用户；每跑完一轮重新生成。
+- The board is **in Chinese by default** with a 中文/EN toggle; use English only if the user asks. / 看板**默认中文**，右上角可切换英文；用户要求才默认英文。
+- **Can run Python / 能运行 Python**：`python3 scripts/ledger.py dashboard` writes a prebuilt, self-contained HTML board to `~/.deal-hunter/dashboard.html`; open it in the browser and give the user the path. Re-run after every batch. / 生成单文件 HTML 看板，用浏览器打开并把路径告诉用户；每跑完一轮重新生成。
 - **Muse**：create a dedicated Space as the board (Spaces build trackers and boards), with the tiles, tabs and card fields above; update it in the background after each run. / 建一个专门的 Space 当看板，按上面的统计、分栏、卡片字段做；每轮后台更新。
 - **Grok Bot / ChatGPT Work / other cloud computers / 其他云电脑**：build the board as a page on the cloud computer (copy the layout of `scripts/dashboard.html`, fill its `DATA` with the items) or in the platform's canvas/document feature; keep it open and refresh it after each run. / 在云电脑上做成网页（照 `scripts/dashboard.html` 的布局，把数据填进 `DATA`），或用平台的画布/文档功能；保持打开，每轮刷新。
 
@@ -85,8 +86,10 @@ Read `references/claiming.md` first. In short / 先读 `references/claiming.md`�
   先判断手上是哪种浏览器：平台自带的云电脑或云端浏览器（Grok Bot、Muse、ChatGPT Work 等，需要登录时请用户**接管**后自己登录，登录会保留），还是用户本机的浏览器。都没有就只列步骤，不自动领。
 - Use the user's own signed-in account; one claim per offer. / 用用户自己的账号，一个活动领一份。
 - With `auto_claim=free_only` (default), claim `cost_type=free`, `verified=true` items with no card/KYC/wallet straight away. / `free_only`（默认）真正免费、已核对、不绑卡不实名的直接领。
-- **Keep the batch moving.** When an item needs something only the user can do — sign-in, card binding, payment, deposit, KYC/ID, SMS/email code, CAPTCHA, wallet connect/sign, terms to accept, or the site blocks automation — park it with `ledger.py hold <id> --reason login|card|payment|kyc|code|captcha|wallet|terms|blocked|other --note "where it stopped"` and **move on to the next item**.
-  **整批不停。** 遇到需要用户本人处理的（登录、绑卡、付款、充值、实名、验证码、人机验证、钱包签名、条款确认、网站拦截自动操作），用 `ledger.py hold` 放进「待你处理」，**接着领下一条**。
+- **Email verification codes: get them yourself.** When a site emails a code or a confirmation link, open https://mail.google.com in the same browser (the user's Google is signed in), find the newest message from that site, and enter the code or open the link. Use the platform's Gmail connector instead if it has one. Only if nothing arrives within a couple of minutes, park it as `code`.
+  **邮箱验证码自己去取。** 网站发了邮箱验证码或确认链接，就在同一个浏览器打开 https://mail.google.com （Google 已登录），找到这个网站最新的那封邮件，填验证码或点确认链接；平台有 Gmail 连接器就用连接器。等几分钟还没收到，才放进待处理（`code`）。
+- **Keep the batch moving.** When an item needs something only the user can do — sign-in, card binding, payment, deposit, KYC/ID, SMS code, CAPTCHA, wallet connect/sign, terms to accept, or the site blocks automation — park it with `ledger.py hold <id> --reason login|card|payment|kyc|code|captcha|wallet|terms|blocked|other --note "where it stopped"` and **move on to the next item**.
+  **整批不停。** 遇到需要用户本人处理的（登录、绑卡、付款、充值、实名、短信验证码、人机验证、钱包签名、条款确认、网站拦截自动操作），用 `ledger.py hold` 放进「待你处理」，**接着领下一条**。
 - After the whole batch, show the "🙋 Waiting for you / 待你处理" list grouped by reason (the digest puts it at the top). Sign-ins are batched: the user takes over once, signs in to all those sites, then says "continue claiming / 继续领" — run `ledger.py list --status pending` and retry each.
   整批跑完再把「待你处理」按原因分组给用户（日报会放在最上面）。要登录的合并成一次：用户接管一次、把这些网站都登录好，说「继续领」，你再运行 `ledger.py list --status pending` 逐条重试。
 - Successful claims: `ledger.py claim <id> --result "what was received"` (this also clears a hold). / 领到了就记录，同时会从待处理里移除。

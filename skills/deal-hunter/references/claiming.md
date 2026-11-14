@@ -15,7 +15,7 @@ Claiming uses accounts already signed in to the browser — most often Google, t
 | Other agents with a cloud computer (Manus…) | Use the platform's take-over / hand-off feature / 用平台的接管功能 | Per platform docs / 以平台说明为准 |
 
 - At the start: open https://accounts.google.com ; if not signed in, start a take-over immediately (no question) and continue once the avatar shows. / 开局打开 Google 登录页，没登录就直接发起接管，看到头像就继续。
-- If the platform has connectors / connected apps (Muse, ChatGPT apps…), use them to read verification or promo emails. / 有官方连接器就用连接器读验证邮件和活动通知。
+- Email codes and confirmation links: open https://mail.google.com in the same browser and read the newest message from that site (or use the platform's Gmail connector). / 邮箱验证码、确认链接：同一个浏览器打开 Gmail 看这个网站最新的邮件（平台有 Gmail 连接器就用连接器）。
 
 ### B. The user's local browser / 用户本机的浏览器
 
@@ -35,11 +35,11 @@ Don't claim. Give the user the steps and official link for each item. / 不自�
 1. Pick claimable items (`ledger.py list --claimable`, or apply the `auto_claim` rules yourself without the script); high value and soon-ending first. / 筛出能领的，优先高价值和快到期的。
 2. Open the official link. **Check the domain first** — it must be official; if it redirects somewhere unfamiliar, stop and mark it as a risk. / **先核对域名**，跳到陌生域名就停下并标为风险。
 3. When sign-in is needed, prefer "Continue with Google / GitHub" using the signed-in account; if not signed in, ask the user to take over per Step 1. / 优先「用 Google / GitHub 继续」；没登录就请用户接管登录。
-4. Follow the page step by step — sign up, click claim, enter codes — and confirm a success message after each step. / 一步步操作，每步确认有成功提示。
+4. Follow the page step by step — sign up, click claim, enter codes — and confirm a success message after each step. When a code or confirmation link is sent by email, open https://mail.google.com , take it from the newest message from that site, and continue. / 一步步操作，每步确认有成功提示。要邮箱验证码或确认链接时，打开 Gmail 从这个网站最新的邮件里取，然后继续。
 5. If you hit any of these, park the item and **move on to the next one** (the user handles them later in one go): / 遇到以下情况，放进「待你处理」，**接着领下一条**（用户之后一次性处理）：
    - payment, card binding, top-up, deposit, or an auto-renewal checkbox / 付款、绑卡、充值、入金、自动续费
    - KYC, ID upload, ID or tax numbers / 实名认证、上传证件、身份证号或税号
-   - a password, SMS or email code, or a CAPTCHA / 密码、短信或邮箱验证码、人机验证
+   - a password, an SMS code, a CAPTCHA, or an email code that hasn't arrived after a few minutes / 密码、短信验证码、人机验证，或等几分钟还没收到的邮箱验证码
    - wallet connect, signatures, token approvals / 连接钱包、签名、授权代币
    - terms that need the user's judgement (data used for training, forced arbitration, long holding periods) / 需要用户自己判断的条款
    - the site blocks automation or keeps challenging the cloud browser / 网站拦截自动操作，或者反复要求验证

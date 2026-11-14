@@ -18,9 +18,20 @@ Files in this skill / 本 skill 的文件：
 - `scripts/dashboard.html` — board template used by `ledger.py dashboard` / 看板模板
 - `scripts/feeds.py` — read any RSS/Atom feed as JSON / 读 RSS、Atom 源
 
-## 0. First run / 第一次使用
+## 0. Install = full setup / 安装即完成全部设置
 
-Don't open with a questionnaire — start working. / 不要先问一串问题，直接开工。
+When the user installs this skill (or asks for it the first time), **do the whole setup in that same turn, in this order, without asking**:
+用户安装这个 skill（或第一次叫它）时，**在同一轮里一口气做完，不用问**：
+
+1. Google sign-in check (below) / 查 Google 登录（见下）
+2. Build the board (§0.5) / 建看板（§0.5）
+3. Create the 2-hour schedule (§6) / 设好每 2 小时定时（§6）
+4. Run the first batch: discover → verify → record → claim → refresh the board (§1–§5) / 跑第一轮：发现 → 核对 → 记账 → 领取 → 刷新看板
+5. Reply with one short summary: signed-in accounts, where the board is, schedule on, what was found/claimed, what's waiting for the user / 一条简短汇报：登录了哪些号、看板在哪、定时已开、找到和领到什么、哪些待你处理
+
+The user should not have to say anything else after "install". / 用户说完「装上」之后不用再说任何话。
+
+Sign-in check / 登录检查：
 
 1. **Check Google first.** Open https://accounts.google.com . If the user isn't signed in, **bring up the sign-in right away — don't ask**: on a cloud computer start a take-over on that page; in a local browser leave the page open and send the user the link to sign in. Once signed in, carry on.
    **开局先查 Google。** 打开 https://accounts.google.com ，没登录就**直接弹出登录，不用问**：云电脑上直接发起接管；本机浏览器就把登录页开着、把链接发给用户。登录好就继续。
@@ -34,7 +45,7 @@ Data lives in `~/.deal-hunter/` (override with `DEAL_HUNTER_HOME`), **on the use
 
 ## 0.5 Build the board / 建看板
 
-Right after the Google check — before searching — set up the user's **deal board**. Everything you find and claim lands on it, and you refresh it after every run.
+During install, right after the Google check — before searching — set up the user's **deal board**. Everything you find and claim lands on it, and you refresh it after every run.
 查完 Google 登录、开始搜之前，先给用户**建一个羊毛看板**。之后找到的、领到的都放上去，每跑一轮刷新一次。
 
 What it shows / 看板内容：
@@ -106,8 +117,8 @@ Each item shows title, category, offer, value, cost type, conditions, regions, d
 
 ## 6. Schedule it — by default / 定时运行（默认开启）
 
-This is a recurring job, not a one-off. At the end of the first run, **create the schedule yourself without asking**: every 2 hours, using the platform's own scheduler — Grok Bot / ChatGPT Work scheduled tasks, Muse Space background updates, Claude scheduled tasks or `/loop`, or cron where you have a shell. Tell the user in one line that it's on and how to change or stop it ("every 4 hours", "only mornings", "stop").
-这是一个定时任务，不是跑一次就完。第一轮跑完，**不用问，直接设好定时**：每 2 小时一次，用平台自己的定时功能（Grok Bot / ChatGPT Work 的定时任务、Muse Space 的后台更新、Claude 的定时任务或 `/loop`，有 shell 就用 cron）。用一句话告诉用户已开启，以及怎么改或关（"改成 4 小时一次""只在早上跑""停掉"）。
+This is a recurring job, not a one-off. **Create the schedule during install, without asking**: every 2 hours, using the platform's own scheduler — Grok Bot / ChatGPT Work scheduled tasks, Muse Space background updates, Claude scheduled tasks or `/loop`, or cron where you have a shell. Tell the user in one line that it's on and how to change or stop it ("every 4 hours", "only mornings", "stop").
+这是一个定时任务，不是跑一次就完。**安装时就设好定时，不用问**：每 2 小时一次，用平台自己的定时功能（Grok Bot / ChatGPT Work 的定时任务、Muse Space 的后台更新、Claude 的定时任务或 `/loop`，有 shell 就用 cron）。用一句话告诉用户已开启，以及怎么改或关（"改成 4 小时一次""只在早上跑""停掉"）。
 
 Each scheduled run / 每次定时运行：discover → verify → record → claim per `auto_claim` → refresh the board → **notify only** when there are new high-value items, items ending within 48h, or new "Waiting for you" items; stay silent otherwise.
 发现 → 核对 → 记账 → 按 `auto_claim` 领取 → 刷新看板 → **只在**有新的高价值活动、48 小时内截止、或新的待你处理时才提醒，其余时候不打扰。

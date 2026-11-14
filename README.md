@@ -17,14 +17,15 @@
 **方法二：复制一段话。** 打开 [`PROMPT.md`](PROMPT.md)，复制「中文版」那一段发给它。
 
 几个建议：
-- **默认定时**：第一轮跑完它会自己设好每 2 小时跑一次（用平台的定时任务），只在有新的高价值、快截止或待你处理时提醒你；想改就说「改成 4 小时一次」「停掉」。
+- **装好就全部就绪**：发完那句话，它会一次性做完——查登录、建看板、设定时、跑第一轮，然后给你一条汇报，你不用再说别的。
+- **默认定时**：安装时它会自己设好每 2 小时跑一次（用平台的定时任务），只在有新的高价值、快截止或待你处理时提醒你；想改就说「改成 4 小时一次」「停掉」。
 - 放进一个专门的 **Space / 项目**，记录和设置都留在里面。
 - 不用先填设置：开局它先查 Google，没登录就直接弹接管让你登录，然后**给你建一个羊毛看板**（统计、A–H 分栏、待你处理、搜索），之后每跑一轮刷新；想改范围随时说一句，比如「只要 AI 和 VPS」。
 - 自动领取需要登录时，它会请你**接管浏览器**，你自己输密码；登录之后一直保留在云电脑里。
 - 建议用一个专门薅羊毛的账号，不要在云电脑里登录主力邮箱、银行或交易所账号。
 
-> **给 AI 看的说明 / For AI agents**：如果你不能安装 skill（Grok Bot、Muse、ChatGPT Work 等），读取 [`PROMPT.md`](PROMPT.md) 里用户语言的那一段，当作本次对话（或 Space、项目）的长期指令执行，从「直接开工」那条开始。如果你能安装 skill，把 `skills/deal-hunter/` 整个文件夹复制到你的 skills 目录，然后按 `SKILL.md` 的「第一次使用」直接开工。
-> If you can't install skills (Grok Bot, Muse, ChatGPT Work…), follow the block in the user's language in [`PROMPT.md`](PROMPT.md) as standing instructions, starting with its "just start" step. If you can, copy `skills/deal-hunter/` into your skills directory and follow its first-run step.
+> **给 AI 看的说明 / For AI agents**：「安装」= 在这一轮里把全部设置做完，不要只复制文件就停。不能安装 skill 的（Grok Bot、Muse、ChatGPT Work 等）：读取 [`PROMPT.md`](PROMPT.md) 里用户语言的那一段，当作长期指令，**立刻**按它开头的五步做完：查 Google 登录（没登录直接弹接管）→ 建看板 → 设每 2 小时定时 → 跑第一轮 → 一条消息汇报。能安装 skill 的：把 `skills/deal-hunter/` 复制到 skills 目录，然后**立刻**按 `SKILL.md` 第 0 节同样做完这五步。
+> "Install" means finishing the whole setup in this turn, not just copying files. If you can't install skills (Grok Bot, Muse, ChatGPT Work…), take the block in the user's language from [`PROMPT.md`](PROMPT.md) as standing instructions and **immediately** do its five setup steps: Google sign-in check (take-over if signed out) → build the board → create the 2-hour schedule → run the first batch → report in one message. If you can install skills, copy `skills/deal-hunter/` into your skills directory and **immediately** do the same five steps from §0 of `SKILL.md`.
 
 ## 不会卡住：「🙋 待你处理」清单
 
@@ -106,7 +107,8 @@ Install this skill: https://github.com/cc6pzupa/cc-deal-hunter
 **Option 2 — paste the prompt.** Copy the English block from [`PROMPT.md`](PROMPT.md#english) and send it.
 
 Tips:
-- **Scheduled by default**: after the first run it sets itself to run every 2 hours (via the platform's scheduled tasks) and only pings you about new high-value, ending-soon or waiting items; say "every 4 hours" or "stop" to change it.
+- **Ready right after install**: after that one line it does everything at once — sign-in check, board, schedule, first run — then sends you one summary; nothing else to say.
+- **Scheduled by default**: during install it sets itself to run every 2 hours (via the platform's scheduled tasks) and only pings you about new high-value, ending-soon or waiting items; say "every 4 hours" or "stop" to change it.
 - Put it in a dedicated **Space / project** so records and settings stay there.
 - No setup questionnaire: it checks Google first, pops up a take-over for you to sign in if needed, then **builds you a deal board** (stats, A–H tabs, waiting list, search) that it refreshes after every run; say "only AI and VPS" any time to narrow it.
 - When claiming needs a login, it asks you to **take over the browser** and sign in yourself; the session stays on the cloud computer.

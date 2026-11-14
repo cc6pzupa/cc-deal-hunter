@@ -73,7 +73,11 @@ skills/deal-hunter/
 
 ## 许可
 
-[PolyForm Noncommercial 1.0.0](LICENSE.md)：个人学习、研究、自用以及非营利用途可以免费使用和修改；**禁止任何商业用途**（包括拿去收费、打包售卖、放进付费产品或服务）。商业授权请联系 [cc羊毛减](https://wool.eshop.us.ci)。
+[PolyForm Noncommercial 1.0.0](LICENSE.md)：个人学习、研究、自用以及非营利用途可以免费使用和修改；**禁止任何商业用途**（包括拿去收费、打包售卖、放进付费产品或服务）。商业授权请在 X 上联系 [@cc6pazpo](https://x.com/cc6pazpo)。
+
+## 联系
+
+X：[@cc6pazpo](https://x.com/cc6pazpo)
 
 ## 免责声明
 
@@ -128,7 +132,11 @@ Ready-made verified source: [cc羊毛减](https://wool.eshop.us.ci) — deal pos
 
 ### License
 
-[PolyForm Noncommercial 1.0.0](LICENSE.md): free for personal, research and non-profit use and modification; **no commercial use** (no charging for it, reselling it, or putting it in a paid product or service). For a commercial licence, contact [cc羊毛减](https://wool.eshop.us.ci).
+[PolyForm Noncommercial 1.0.0](LICENSE.md): free for personal, research and non-profit use and modification; **no commercial use** (no charging for it, reselling it, or putting it in a paid product or service). For a commercial licence, contact [@cc6pazpo](https://x.com/cc6pazpo) on X.
+
+### Contact
+
+X: [@cc6pazpo](https://x.com/cc6pazpo)
 
 ### Disclaimer
 

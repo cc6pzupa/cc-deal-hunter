@@ -54,7 +54,7 @@ TEXT = {
 COST_TYPES = ["free", "trial", "deposit", "volume", "invite", "paid"]
 HOLD_REASONS = ["login", "card", "payment", "kyc", "code", "captcha", "wallet", "terms", "blocked", "other"]
 DEFAULT_CFG = {"interests": ["ai", "crypto", "ucard", "bank", "vps", "software", "other"],
-               "auto_claim": "free_only", "accounts": [], "lang": "zh", "birthdate": ""}
+               "auto_claim": "free_only", "accounts": [], "lang": "zh", "birthdate": "", "profile": {}}
 FIELDS_HELP = """Fields / 字段 (* required 必填):
   *title  *category (%s)  *official_url  *cost_type (%s)  *sources [url,...]
   offer 优惠内容 · value_usd number 数字 · value_note 价值说明 · conditions 参与条件 · regions [地区]
@@ -333,12 +333,37 @@ def adult_birthdate():
     return d.isoformat()
 
 
+def make_profile():
+    """Reasonable answers for ordinary sign-up fields, generated once. / 注册表单普通字段的合理默认值，生成一次后复用."""
+    import random
+    r = random.Random()
+    return {
+        "birthdate": adult_birthdate(),
+        "gender": "prefer_not_to_say (fallback: " + r.choice(["male", "female"]) + ")",
+        "occupation": r.choice(["Software developer", "Product manager", "Designer", "Data analyst", "Freelancer"]),
+        "job_title": "Individual contributor",
+        "company": "Self-employed",
+        "company_size": "1",
+        "industry": "Technology",
+        "role_or_use": "Personal use / side projects",
+        "experience_level": "Intermediate",
+        "team_size": "Just me",
+        "how_did_you_hear": r.choice(["Search engine", "X (Twitter)", "Friend"]),
+        "website": "",
+        "newsletter_and_marketing": "unchecked",
+        "country_timezone_language": "use what the form pre-selects (matches the browser/IP)",
+    }
+
+
 def cmd_config(a, cfg):
-    if a.birthdate:
-        if not cfg.get("birthdate"):
-            cfg["birthdate"] = adult_birthdate()
-            save(CFG, cfg)
-        print(json.dumps({"birthdate": cfg["birthdate"]}))
+    if a.profile or a.birthdate:
+        if not cfg.get("profile"):
+            cfg["profile"] = make_profile()
+            if cfg.get("birthdate"):  # keep a birthdate the user set / 保留用户自己设的生日
+                cfg["profile"]["birthdate"] = cfg["birthdate"]
+        cfg["birthdate"] = cfg["profile"]["birthdate"]
+        save(CFG, cfg)
+        print(json.dumps(cfg["profile"] if a.profile else {"birthdate": cfg["birthdate"]}, ensure_ascii=False, indent=1))
         return
     if not os.path.exists(CFG) and not a.set:
         print(json.dumps({"configured": False, "defaults": DEFAULT_CFG, "path": CFG}, ensure_ascii=False, indent=1))
@@ -358,6 +383,10 @@ def cmd_config(a, cfg):
                 raise SystemExit("birthdate: YYYY-MM-DD")
             if (dt.date.today() - b).days < 18 * 365.25:
                 raise SystemExit("birthdate must be an adult (18+) / 生日要满 18 岁")
+            if cfg.get("profile"):
+                cfg["profile"]["birthdate"] = v
+        if isinstance(DEFAULT_CFG[k], dict):
+            raise SystemExit(f"{k}: use --profile to view; edit {CFG} to change / 用 --profile 查看，改动请编辑配置文件")
         cfg[k] = [x.strip() for x in v.split(",") if x.strip()] if isinstance(DEFAULT_CFG[k], list) else v
     if a.set:
         save(CFG, cfg)
@@ -370,6 +399,7 @@ def main():
     p = sub.add_parser("config")
     p.add_argument("--set", nargs="*", metavar="KEY=VALUE")
     p.add_argument("--birthdate", action="store_true", help="print the saved adult birthdate, creating it once / 取注册用的成人生日（没有就生成一次）")
+    p.add_argument("--profile", action="store_true", help="print the saved sign-up profile, creating it once / 取注册表单用的资料（没有就生成一次）")
     sub.add_parser("add", description=FIELDS_HELP, formatter_class=argparse.RawDescriptionHelpFormatter)
     p = sub.add_parser("list")
     p.add_argument("--category", choices=CATEGORIES)

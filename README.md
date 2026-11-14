@@ -18,12 +18,12 @@
 
 几个建议：
 - 放进一个专门的 **Space / 项目**，记录和设置都留在里面；平台有定时任务的话，让它每 2 小时自动跑一次。
-- 第一次它会问你：关心哪些类别、在哪个地区、要不要自动领。
+- 不用先填一堆设置：它会自己看你登录了哪些账号，然后直接开工；想改范围随时说一句，比如「只要 AI 和 VPS」。
 - 自动领取需要登录时，它会请你**接管浏览器**，你自己输密码；登录之后一直保留在云电脑里。
 - 建议用一个专门薅羊毛的账号，不要在云电脑里登录主力邮箱、银行或交易所账号。
 
-> **给 AI 看的说明 / For AI agents**：如果你不能安装 skill（Grok Bot、Muse、ChatGPT Work 等），读取 [`PROMPT.md`](PROMPT.md) 里用户语言的那一段，当作本次对话（或 Space、项目）的长期指令执行，并从「第一次先问我」开始。如果你能安装 skill，把 `skills/deal-hunter/` 整个文件夹复制到你的 skills 目录，然后按 `SKILL.md` 的「第一次使用」问用户设置。
-> If you can't install skills (Grok Bot, Muse, ChatGPT Work…), follow the block in the user's language in [`PROMPT.md`](PROMPT.md) as standing instructions, starting with its first-run questions. If you can, copy `skills/deal-hunter/` into your skills directory and run its first-time setup.
+> **给 AI 看的说明 / For AI agents**：如果你不能安装 skill（Grok Bot、Muse、ChatGPT Work 等），读取 [`PROMPT.md`](PROMPT.md) 里用户语言的那一段，当作本次对话（或 Space、项目）的长期指令执行，从「直接开工」那条开始。如果你能安装 skill，把 `skills/deal-hunter/` 整个文件夹复制到你的 skills 目录，然后按 `SKILL.md` 的「第一次使用」直接开工。
+> If you can't install skills (Grok Bot, Muse, ChatGPT Work…), follow the block in the user's language in [`PROMPT.md`](PROMPT.md) as standing instructions, starting with its "just start" step. If you can, copy `skills/deal-hunter/` into your skills directory and follow its first-run step.
 
 ## 不会卡住：「🙋 待你处理」清单
 
@@ -105,7 +105,7 @@ Install this skill: https://github.com/cc6pzupa/cc-deal-hunter
 
 Tips:
 - Put it in a dedicated **Space / project** so records and settings stay there; if the platform has scheduled tasks, have it run every 2 hours.
-- The first time, it asks which categories you care about, where you are, and whether to auto-claim.
+- No setup questionnaire: it checks which accounts you're signed in to and gets going; say "only AI and VPS" any time to narrow it.
 - When claiming needs a login, it asks you to **take over the browser** and sign in yourself; the session stays on the cloud computer.
 - Use a dedicated deals account; don't sign in to your main email, bank or exchange accounts on a cloud computer.
 

@@ -1,7 +1,7 @@
 # Where to find deals / 去哪找羊毛
 
-Rule: aggregators and communities are only for **leads**; verification always goes back to the **official page**. Skip offers the user's region can't use. Restrict searches to the last few days (add the current month/year or use the search tool's time filter) — old news is everywhere.
-原则：聚合站和社区只负责发现线索，**核对一定回到官方页面**。用户地区用不了的跳过。搜索限定最近几天，旧闻很多。
+Rule: aggregators and communities are only for **leads**; verification always goes back to the **official page**. Restrict searches to the last few days (add the current month/year or use the search tool's time filter) — old news is everywhere.
+原则：聚合站和社区只负责发现线索，**核对一定回到官方页面**。搜索限定最近几天，旧闻很多。
 
 Search in the language of the source: Chinese communities with Chinese keywords, English ones with English keywords.
 按来源的语言搜索：中文社区用中文关键词，英文社区用英文关键词。

@@ -19,14 +19,15 @@ Files in this skill / 本 skill 的文件：
 
 ## 0. First run / 第一次使用
 
-Run `python3 scripts/ledger.py config`. If not configured, ask the user and save with `ledger.py config --set key=value`:
-运行 `python3 scripts/ledger.py config`，没配置过就问用户下面几项并保存：
+Don't open with a questionnaire — start working. / 不要先问一串问题，直接开工。
 
-- `interests` — categories to watch (default all: `ai,crypto,ucard,bank,vps,software,other`) / 关心哪些类别
-- `regions` — where the user lives and which countries' phone numbers / IDs they have (rules out ineligible deals) / 所在地区、有哪些国家的手机号和证件
-- `auto_claim` — `off` (find only) · `free_only` (auto-claim only truly free, no card, no KYC) · `ask` (ask every time, default) / 只找不领 · 只自动领真正免费的 · 每条先问（默认）
-- `accounts` — accounts already signed in to the browser (Google, GitHub, X…) / 浏览器里已登录的账号
-- `lang` — `zh` or `en`, the user's language / 用户语言
+1. **Detect signed-in accounts yourself.** If you have a browser, open google.com, github.com and x.com and check whether each shows the user as signed in. Save what you find: `ledger.py config --set accounts=google,github`.
+   **自己检查已登录的账号。** 有浏览器就打开 google.com、github.com、x.com，看是不是已经登录，结果存进 `accounts`。
+2. **Ask once, only if it matters.** Tell the user in one line what you found and, if Google isn't signed in, ask whether to take over and sign in now or carry on (login-only items will wait on the "Waiting for you" list). Then start.
+   **最多问一句。** 一行告诉用户查到了什么；Google 没登录的话，问一句现在要不要接管登录，还是先跑（要登录的会进「待你处理」）。然后开始。
+3. Language: answer in the language the user wrote in, and save it (`--set lang=zh|en`). / 用户用什么语言就用什么语言，顺手存下来。
+
+Defaults, no need to ask / 默认值，不用问：all categories 全部类别 · `auto_claim=free_only` (truly free ones are claimed straight away; everything else goes on the waiting list / 真正免费的直接领，其他进待处理). The user can change them any time by saying so, e.g. "only AI and VPS" or "ask before each claim". / 用户随时一句话就能改，比如「只要 AI 和 VPS」「每条领之前问我」。
 
 Data lives in `~/.deal-hunter/` (override with `DEAL_HUNTER_HOME`), **on the user's machine only**. If you cannot run Python, keep a table with the same fields in the conversation, project or platform memory, and apply the same de-dupe and archive rules.
 账本和配置在 `~/.deal-hunter/`，**只存在用户本机**。不能运行 Python 时，就在对话、项目或平台记忆里维护同样字段的一张表，按同样规则去重和归档。
@@ -67,7 +68,7 @@ Read `references/claiming.md` first. In short / 先读 `references/claiming.md`�
 - Work out which browser you have: a platform cloud computer or cloud browser (Grok Bot, Muse, ChatGPT Work…: ask the user to **take over** and sign in themselves; the session persists), or the user's local browser (Claude in Chrome or similar extensions, Playwright MCP with a persistent profile, computer use). With none, list the steps instead of claiming.
   先判断手上是哪种浏览器：平台自带的云电脑或云端浏览器（Grok Bot、Muse、ChatGPT Work 等，需要登录时请用户**接管**后自己登录，登录会保留），还是用户本机的浏览器。都没有就只列步骤，不自动领。
 - Use the user's own signed-in account; one claim per offer. / 用用户自己的账号，一个活动领一份。
-- With `auto_claim=free_only`, auto-claim only `cost_type=free`, `verified=true`, eligible region, no card/KYC/wallet. / `free_only` 只自动领真正免费、已核对、地区符合、不绑卡不实名的。
+- With `auto_claim=free_only` (default), claim `cost_type=free`, `verified=true` items with no card/KYC/wallet straight away. / `free_only`（默认）真正免费、已核对、不绑卡不实名的直接领。
 - **Keep the batch moving.** When an item needs something only the user can do — sign-in, card binding, payment, deposit, KYC/ID, SMS/email code, CAPTCHA, wallet connect/sign, terms to accept, or the site blocks automation — park it with `ledger.py hold <id> --reason login|card|payment|kyc|code|captcha|wallet|terms|blocked|other --note "where it stopped"` and **move on to the next item**.
   **整批不停。** 遇到需要用户本人处理的（登录、绑卡、付款、充值、实名、验证码、人机验证、钱包签名、条款确认、网站拦截自动操作），用 `ledger.py hold` 放进「待你处理」，**接着领下一条**。
 - After the whole batch, show the "🙋 Waiting for you / 待你处理" list grouped by reason (the digest puts it at the top). Sign-ins are batched: the user takes over once, signs in to all those sites, then says "continue claiming / 继续领" — run `ledger.py list --status pending` and retry each.

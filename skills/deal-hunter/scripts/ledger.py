@@ -53,7 +53,7 @@ TEXT = {
 COST_TYPES = ["free", "trial", "deposit", "volume", "invite", "paid"]
 HOLD_REASONS = ["login", "card", "payment", "kyc", "code", "captcha", "wallet", "terms", "blocked", "other"]
 DEFAULT_CFG = {"interests": ["ai", "crypto", "ucard", "bank", "vps", "software", "other"],
-               "regions": [], "auto_claim": "ask", "accounts": [], "lang": "zh"}
+               "auto_claim": "free_only", "accounts": [], "lang": "zh"}
 FIELDS_HELP = """Fields / 字段 (* required 必填):
   *title  *category (%s)  *official_url  *cost_type (%s)  *sources [url,...]
   offer 优惠内容 · value_usd number 数字 · value_note 价值说明 · conditions 参与条件 · regions [地区]
@@ -205,12 +205,8 @@ def cmd_add(a, db):
 
 
 def claimable(d, cfg):
-    mode = cfg.get("auto_claim", "ask")
+    mode = cfg.get("auto_claim", "free_only")
     if mode == "off" or d["category"] == "risk" or status(d) not in ("active", "expiring"):  # pending = waiting for the user / 等用户处理
-        return False
-    regions = {r.lower() for r in cfg.get("regions") or []}
-    dr = {r.lower() for r in d.get("regions") or []}
-    if regions and dr and not (dr & regions) and not dr & {"global", "全球", "worldwide"}:
         return False
     if mode == "free_only":
         return d["cost_type"] == "free" and d["verified"] and not set(d.get("needs") or []) & {"card", "kyc", "wallet"}

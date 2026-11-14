@@ -42,14 +42,14 @@ Open the **official page** (promo page, official announcement, official blog or 
 每一条都要**打开官方页面**确认：
 
 - The offer exists and has not ended / 活动存在、还没结束
-- Deadline — only if officially stated; otherwise leave it empty, **never guess** / 截止时间只取官方写明的，**不要猜**
+- Deadline — as officially stated; leave it empty if none / 截止时间按官方写的，没写就留空
 - Regions, eligibility, hidden conditions (new users only, invite code, US phone, KYC…) / 地区、资格、隐藏条件
 - `cost_type`, exactly one / 成本类型，必选一个：
   `free` truly free 真正免费 · `trial` free trial that bills or needs a card 免费试用 · `deposit` needs a deposit 要充值入金 · `volume` needs trading volume 要交易量 · `invite` needs an invite 要邀请 · `paid` discount on a paid product 付费折扣
-- Value — `value_usd` only if the official page gives an amount; otherwise explain in `value_note`, don't estimate / 官方给了金额才写，不估算
+- Value — `value_usd` only if the official page gives an amount; otherwise describe it in `value_note` / 官方给了金额才写，否则在 `value_note` 里说明
 
-Items seen only second-hand (forums, reposts, aggregators) with no official source get `verified=false` and are shown as "unverified / 待核实". **Never invent deals or present rumours as fact.**
-只在二手来源看到、找不到官方出处的，标 `verified=false`，展示为「待核实」。**绝不编造优惠，也不把传闻写成事实。**
+Items seen only second-hand (forums, reposts, aggregators) with no official source get `verified=false` and are shown as "unverified / 待核实". Record only what you found.
+只在二手来源看到、找不到官方出处的，标 `verified=false`，展示为「待核实」。只写查到的事实。
 
 ## 3. Record / 记账
 
@@ -66,10 +66,10 @@ Read `references/claiming.md` first. In short / 先读 `references/claiming.md`�
 
 - Work out which browser you have: a platform cloud computer or cloud browser (Grok Bot, Muse, ChatGPT Work…: ask the user to **take over** and sign in themselves; the session persists), or the user's local browser (Claude in Chrome or similar extensions, Playwright MCP with a persistent profile, computer use). With none, list the steps instead of claiming.
   先判断手上是哪种浏览器：平台自带的云电脑或云端浏览器（Grok Bot、Muse、ChatGPT Work 等，需要登录时请用户**接管**后自己登录，登录会保留），还是用户本机的浏览器。都没有就只列步骤，不自动领。
-- Only the user's own signed-in accounts, one account per person, **one claim per offer**. / 只用用户自己的账号，**一个活动领一份**。
+- Use the user's own signed-in account; one claim per offer. / 用用户自己的账号，一个活动领一份。
 - With `auto_claim=free_only`, auto-claim only `cost_type=free`, `verified=true`, eligible region, no card/KYC/wallet. / `free_only` 只自动领真正免费、已核对、地区符合、不绑卡不实名的。
-- **Never block the run.** When an item needs something only the user can do — sign-in, card binding, payment, deposit, KYC/ID, SMS/email code, CAPTCHA, wallet connect/sign, terms to accept, or the site blocks automation — **don't do it and don't wait**: park it with `ledger.py hold <id> --reason login|card|payment|kyc|code|captcha|wallet|terms|blocked|other --note "where it stopped"` and **move on to the next item**.
-  **不要卡住整个流程。** 遇到只有用户能做的事（登录、绑卡、付款、充值、实名、验证码、人机验证、钱包签名、条款确认、网站拦截自动操作），**不替用户做、也不原地等**：用 `ledger.py hold` 放进「待你处理」，**接着领下一条**。
+- **Keep the batch moving.** When an item needs something only the user can do — sign-in, card binding, payment, deposit, KYC/ID, SMS/email code, CAPTCHA, wallet connect/sign, terms to accept, or the site blocks automation — park it with `ledger.py hold <id> --reason login|card|payment|kyc|code|captcha|wallet|terms|blocked|other --note "where it stopped"` and **move on to the next item**.
+  **整批不停。** 遇到需要用户本人处理的（登录、绑卡、付款、充值、实名、验证码、人机验证、钱包签名、条款确认、网站拦截自动操作），用 `ledger.py hold` 放进「待你处理」，**接着领下一条**。
 - After the whole batch, show the "🙋 Waiting for you / 待你处理" list grouped by reason (the digest puts it at the top). Sign-ins are batched: the user takes over once, signs in to all those sites, then says "continue claiming / 继续领" — run `ledger.py list --status pending` and retry each.
   整批跑完再把「待你处理」按原因分组给用户（日报会放在最上面）。要登录的合并成一次：用户接管一次、把这些网站都登录好，说「继续领」，你再运行 `ledger.py list --status pending` 逐条重试。
 - Successful claims: `ledger.py claim <id> --result "what was received"` (this also clears a hold). / 领到了就记录，同时会从待处理里移除。

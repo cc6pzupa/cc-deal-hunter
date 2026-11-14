@@ -23,7 +23,7 @@ Search in the language of the source: Chinese communities with Chinese keywords,
 
 - Official: exchange announcement/promo pages (Binance, OKX, Bybit, Bitget, Coinbase…), project blogs, official X, official Discord announcement channels / 交易所公告页、项目官方渠道
 - Leads 线索: DeFiLlama airdrops page, project docs' points/rewards pages
-- **Highest-risk category / 风险最高**: official domains only; wallet signatures, token approvals, "pay gas to claim" are risks; never import a seed phrase anywhere / 只认官方域名；签名、授权、"先付 gas 领空投"一律当风险；不要在任何页面导入助记词
+- Use official domains; record "pay gas to claim", seed-phrase requests and unexpected token approvals as `risk` items / 以官方域名为准；"先付 gas 领空投"、要助记词、异常授权的记为 `risk`
 
 ## Crypto cards (U卡)
 
